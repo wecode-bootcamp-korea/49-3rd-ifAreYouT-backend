@@ -1,24 +1,24 @@
-const express = require("express");
-const morgan = require("morgan");
-const cors = require("cors");
+const express = require('express');
+const morgan = require('morgan');
+const cors = require('cors');
 
-require("dotenv").config();
+require('dotenv').config();
 
 const app = express();
 
-const indexRouter = require("./src/routes");
-app.set("port", process.env.PORT || 8000);
+const indexRouter = require('./src/routes');
+app.set('port', process.env.PORT || 8000);
 app.use(
   cors({
-    origin: "*",
+    origin: '*',
     credentials: true,
-  })
+  }),
 );
-app.use(morgan("dev"));
+app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/", indexRouter);
+app.use('/', indexRouter);
 
 app.use((req, _, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
@@ -29,7 +29,7 @@ app.use((req, _, next) => {
 app.use((err, _, res, next) => {
   res.status(err.status || 500);
   return res.json({
-    error: `${err.status ? err.status : ""} ${err.message}`,
+    error: `${err.status ? err.status : ''} ${err.message}`,
   });
 });
 
