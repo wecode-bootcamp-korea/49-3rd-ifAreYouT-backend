@@ -6,6 +6,7 @@ require("dotenv").config();
 
 const app = express();
 
+const indexRouter = require("./src/routes");
 app.set("port", process.env.PORT || 8000);
 app.use(
   cors({
@@ -16,6 +17,8 @@ app.use(
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use("/", indexRouter);
 
 app.use((req, _, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
