@@ -1,6 +1,6 @@
 const { throwError, verifyToken } = require('../utils');
 
-exports.tokenVerification = (req, res, next) => {
+exports.verifyToken = (req, res, next) => {
   const token = req.header('Authorization');
   try {
     if (!token) throwError(401);
