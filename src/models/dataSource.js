@@ -1,14 +1,14 @@
 require('dotenv').config();
-const config = require('../config');
-const { development, test, production } = config;
 const { DataSource } = require('typeorm');
-const dataSource = new DataSource(
-  process.env.NODE_ENV === 'development'
-    ? development
-    : process.env.NODE_ENV === 'production'
-    ? production
-    : test,
-);
+const dataSource = new DataSource({
+  type: 'mysql',
+  host: process.env.TYPEORM_HOST,
+  port: process.env.TYPEORM_PORT,
+  username: process.env.TYPEORM_USERNAME,
+  password: process.env.TYPEORM_PASSWORD,
+  database: process.env.TYPEORM_DATABASE,
+  logging: true,
+});
 
 dataSource
   .initialize()
