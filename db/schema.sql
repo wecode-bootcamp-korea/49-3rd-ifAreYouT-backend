@@ -8,7 +8,7 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
- 
+
 --
 -- Table structure for table `categories`
 --
@@ -305,8 +305,8 @@ CREATE TABLE `seat_grades` (
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `seats` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `row` varchar(10) NOT NULL,
-  `col` int NOT NULL,
+  `row_name` varchar(10) NOT NULL,
+  `col_name` int NOT NULL,
   `stage_id` int NOT NULL,
   `grade_id` int NOT NULL,
   PRIMARY KEY (`id`),
