@@ -127,7 +127,7 @@ CREATE TABLE `events` (
   `stage_id` int NOT NULL,
   `category_id` int NOT NULL,
   `performer_id` int NOT NULL,
-  `promotion_id` int NOT NULL,
+  `promotion_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `category_id` (`category_id`),
   KEY `stage_id` (`stage_id`),
@@ -410,5 +410,10 @@ INSERT INTO `schema_migrations` (version) VALUES
   ('20231012080411'),
   ('20231012080453'),
   ('20231012080543'),
-  ('20231012080624');
+  ('20231012080624'),
+  ('20231014152629'),
+  ('20231016152148'),
+  ('20231016152204'),
+  ('20231016152211'),
+  ('20231016152214');
 UNLOCK TABLES;
