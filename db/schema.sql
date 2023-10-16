@@ -278,9 +278,9 @@ CREATE TABLE `questions` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `schema_migrations` (
-  `version` varchar(128) COLLATE utf8mb4_general_ci NOT NULL,
+  `version` varchar(128) NOT NULL,
   PRIMARY KEY (`version`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -370,7 +370,7 @@ CREATE TABLE `users` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping routines for database 'areyout'
+-- Dumping routines for database 'ifAreYouT'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
