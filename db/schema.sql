@@ -167,7 +167,7 @@ CREATE TABLE `orders` (
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `payment_methods` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `method` varchar(255) DEFAULT NULL,
+  `method` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -293,10 +293,7 @@ CREATE TABLE `seat_grades` (
   `id` int NOT NULL AUTO_INCREMENT,
   `grade` char(1) NOT NULL,
   `price` decimal(10,0) NOT NULL,
-  `seat_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `seat_id` (`seat_id`),
-  CONSTRAINT `seat_grades_ibfk_1` FOREIGN KEY (`seat_id`) REFERENCES `seats` (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -308,12 +305,15 @@ CREATE TABLE `seat_grades` (
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `seats` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(10) NOT NULL,
-  `line` int NOT NULL,
+  `row` varchar(10) NOT NULL,
+  `col` int NOT NULL,
   `stage_id` int NOT NULL,
+  `grade_id` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `stage_id` (`stage_id`),
-  CONSTRAINT `seats_ibfk_1` FOREIGN KEY (`stage_id`) REFERENCES `stages` (`id`)
+  KEY `grade_id` (`grade_id`),
+  CONSTRAINT `seats_ibfk_1` FOREIGN KEY (`stage_id`) REFERENCES `stages` (`id`),
+  CONSTRAINT `seats_ibfk_2` FOREIGN KEY (`grade_id`) REFERENCES `seat_grades` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -399,9 +399,9 @@ INSERT INTO `schema_migrations` (version) VALUES
   ('20231012075729'),
   ('20231012075800'),
   ('20231012075841'),
+  ('20231012075900'),
   ('20231012075911'),
   ('20231012075949'),
-  ('20231012080020'),
   ('20231012080054'),
   ('20231012080320'),
   ('20231012080349'),
