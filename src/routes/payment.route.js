@@ -1,10 +1,7 @@
 const express = require("express"); 
 const { paymentController } = require("../controllers");
 const paymentRouter = express.Router();
+console.log('hey');
+paymentRouter.get('/payment/:methods', paymentController.showPaymentMethods);
 
-paymentRouter.get("/payment/:methods",paymentController.showPaymentMethods);
-//paymentRouter.get("/payment/:options", paymentController.showPaymentOptions);
-paymentRouter.get("/payment/calcelFeeAgreement", paymentController.showCalcelFeeAgreement);
-
-
-module.exports = { paymentRouter };
+module.exports = paymentRouter;

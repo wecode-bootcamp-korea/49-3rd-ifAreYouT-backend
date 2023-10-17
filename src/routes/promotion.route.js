@@ -1,8 +1,7 @@
 const express = require('express');
-const router = express.Router();
+const { promotionController } = require('../controllers');
+const promotionRouter = express.Router();
 
-router.get('/payment', () => {
-  res.send('OK');
-});
+promotionRouter.get('/promotion/:eventId', promotionController);
 
-module.exports = router;
+module.exports = promotionRouter;

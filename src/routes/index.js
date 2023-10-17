@@ -1,28 +1,12 @@
 const express = require('express');
+const paymentRouter = require('./payment.route');
+//const promotionRouter = require('./promotion.route');
+//const promotionRouter = require('./promotion.route');
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
-  res.send('OK');
-});
+console.log('he');
+router.use('/payment', paymentRouter);
+//router.use('/promotion', promotionRouter);
 
 module.exports = router;
 
-
-
-
-
-// const { userRouter } = require("./userRouter");
-// const { productRouter } = require("./productRouter");
-// const { cartRouter } = require("./cartRouter");
-// const { paymentRouter } = require("./paymentRouter");
-// const { orderRouter } = require("./orderRouter");
-
-
-
-// router.use("/users", userRouter);
-// router.use("/product", productRouter);
-// router.use("/cart", cartRouter);
-// router.use("/payment", paymentRouter);
-// router.use("/order", orderRouter);
-
-// module.exports = { router };
