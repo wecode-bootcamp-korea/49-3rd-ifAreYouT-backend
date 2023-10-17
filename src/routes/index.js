@@ -6,6 +6,7 @@ const userRouter = require("./userRouter");
 router.get('/', (req, res, next) => {
   res.send('OK');
 });
+
 router.use('/mypage', userRouter);
 
-module.exports =  router;
+module.exports = router;
