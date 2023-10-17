@@ -21,6 +21,26 @@ const userTicketsController = async (req, res) => {
   }
 };
 
+const CheckOrderController = async (req, res) => {
+  const userId = req.params.userId;
+  try {
+    const checkUserOrder = await userService.CheckOrder(userId);
+
+    if (!checkUserOrder || checkUserOrder.length === 0) {
+      throwError(400, 'PURCHASE_HISTORY_NOT_FOUND');
+    }
+
+    res.status(200).json({ 
+      message: "GET_ORDER",
+      data: checkUserOrder 
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json(error);
+  }
+};
+
 module.exports = {
-  userTicketsController
+  userTicketsController,
+  CheckOrderController
 };

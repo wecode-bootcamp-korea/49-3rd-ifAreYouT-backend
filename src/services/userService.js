@@ -19,7 +19,12 @@ const userTickets = async (body) => {
   return await userDao.userGetTickets(userId);
 };
 
+const CheckOrder = async (userId) => {
+  return await userDao.userCheckOrder(userId);
+};
+
 module.exports = {
   isOrderValid,
-  userTickets
+  userTickets,
+  CheckOrder
 };
