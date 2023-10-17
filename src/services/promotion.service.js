@@ -1,7 +1,7 @@
 const {promotionDao} = require("../models");
 
-const showMain = async () => {
-  const data = await productDao.showMain();
+const showPromotion = async (eventId, performerId) => {
+  const data = await promotionDao.showPromotion(eventId, performerId);
   // if (!res) {
   //   const error = new Error("NO PRODUCT");
   //   error.status = 400;
@@ -12,7 +12,7 @@ const showMain = async () => {
   return data;
 };
 
-module.exports = { 
-  showMain,
-
- };
+module.exports = {
+  showPromotion,
+  isPreorderPass,
+};
