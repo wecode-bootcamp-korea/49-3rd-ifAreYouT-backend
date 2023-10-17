@@ -30,9 +30,9 @@ const CheckOrderController = async (req, res) => {
       throwError(400, 'PURCHASE_HISTORY_NOT_FOUND');
     }
 
-    res.status(200).json({ 
-      message: "GET_ORDER",
-      data: checkUserOrder 
+    res.status(200).json({
+      message: 'GET_ORDER',
+      data: checkUserOrder,
     });
   } catch (error) {
     console.log(error);
@@ -42,5 +42,5 @@ const CheckOrderController = async (req, res) => {
 
 module.exports = {
   userTicketsController,
-  CheckOrderController
+  CheckOrderController,
 };

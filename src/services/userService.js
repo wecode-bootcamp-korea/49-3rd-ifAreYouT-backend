@@ -26,5 +26,5 @@ const CheckOrder = async (userId) => {
 module.exports = {
   isOrderValid,
   userTickets,
-  CheckOrder
+  CheckOrder,
 };
