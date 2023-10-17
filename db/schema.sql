@@ -295,7 +295,10 @@ CREATE TABLE `seat_grades` (
   `id` int NOT NULL AUTO_INCREMENT,
   `grade` char(1) NOT NULL,
   `price` decimal(10,0) NOT NULL,
-  PRIMARY KEY (`id`)
+  `stage_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `stage_id` (`stage_id`),
+  CONSTRAINT `seat_grades_ibfk_1` FOREIGN KEY (`stage_id`) REFERENCES `stages` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
