@@ -31,5 +31,5 @@ module.exports = {
   isOrderValid,
   userTickets,
   CheckOrder,
-  getLikedEvents
+  getLikedEvents,
 };

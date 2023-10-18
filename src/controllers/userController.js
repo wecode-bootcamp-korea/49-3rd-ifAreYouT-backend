@@ -46,7 +46,7 @@ const userByLikeController = async (req, res) => {
     const likedEvents = await userService.getLikedEvents(userId);
 
     if (likedEvents.length === 0) {
-      throwError(400, 'NOT_FOUND_LIKES')
+      throwError(400, 'NOT_FOUND_LIKES');
     }
 
     res.status(200).json({
@@ -62,5 +62,5 @@ const userByLikeController = async (req, res) => {
 module.exports = {
   userTicketsController,
   CheckOrderController,
-  userByLikeController
+  userByLikeController,
 };
