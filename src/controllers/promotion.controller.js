@@ -2,13 +2,10 @@ const { promotionService } = require('../services');
 
 const showPromotion = async (req, res) => {
   try {
-    const userId = req.userId;
-    const { eventId, performerId } = req.body;
-    const data = await promotionService.showPromotion(
-      userId,
-      eventId,
-      performerId,
-    );
+    //const userId = req.userId;
+    const { promotionId } = req.body;
+    console.log(promotionId);
+    const data = await promotionService.showPromotion(promotionId);
     res.status(201).json({
       message: 'QUESTIONS SELECTED',
       data: data,
@@ -29,6 +26,7 @@ const isPreorderPass = async (req, res) => {
       ans5,
     );
     res.status(201).json({
+      //231018 메세지 빌더 방법이 없을까
       message: 'PREORDERPASS Y/N',
       data: data,
     });

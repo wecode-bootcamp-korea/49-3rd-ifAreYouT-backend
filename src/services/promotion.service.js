@@ -1,14 +1,13 @@
 const {promotionDao} = require("../models");
 
-const showPromotion = async (eventId, performerId) => {
-  const data = await promotionDao.showPromotion(eventId, performerId);
-  // if (!res) {
-  //   const error = new Error("NO PRODUCT");
-  //   error.status = 400;
-  //   throw error;
-  // }
-  console.log('service-he');
-  // const ans = await productDao.showMain(req,res);//231002return을 어떻게 하는지
+const showPromotion = async (promotionId) => {
+  const data = await promotionDao.showPromotion(promotionId);
+  console.log('service-showPromoQ');
+  return data;
+};
+const isPreorderPass = async (eventId, performerId) => {
+  const data = await promotionDao.isPreorderPass(eventId, performerId);
+  console.log('service-showPromoQ');
   return data;
 };
 
