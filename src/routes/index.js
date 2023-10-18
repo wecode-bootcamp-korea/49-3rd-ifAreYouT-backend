@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-const userRouter = require("./userRouter");
+const ticketRouter = require("./ticketRouter");
 
 router.get('/', (req, res, next) => {
   res.send('OK');
 });
 
-router.use('/mypage', userRouter);
+router.use('/tickets', ticketRouter);
 
 module.exports = router;

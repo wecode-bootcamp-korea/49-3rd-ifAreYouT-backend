@@ -1,3 +1,3 @@
-const userDao = require("./userDao");
+const ticketDao = require("./ticketDao");
 
-module.exports = { userDao }
+module.exports = { ticketDao }

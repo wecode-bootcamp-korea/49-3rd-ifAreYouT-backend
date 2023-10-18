@@ -1,5 +1,5 @@
-const userController = require("./userController")
+const ticketController = require("./ticketController")
 
 module.exports = {
-    userController
+    ticketController
 }
