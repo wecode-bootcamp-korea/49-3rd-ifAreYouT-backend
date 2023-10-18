@@ -54,15 +54,13 @@ describe('user get likes', () => {
   });
 
   test('GET_like: userlike', async () => {
-    const res = await request(app).get(`/mypage/like-users/1`).send();
+    const res = await request(app).get(`/confirmations`).send();
     expect(res.status).toBe(200);
     expect(res.body.message).toEqual('LIKED_EVENTS_FOUND');
   });
 
   test('INVALID_LIKE: invalid userlike', async () => {
-    const userId = 999;
-
-    const res = await request(app).get(`/mypage/like-users/${userId}`);
+    const res = await request(app).get(`/confirmations`);
     expect(res.status).toBe(400);
     expect(res.body.message).toEqual('NOT_FOUND_LIKES');
   });
