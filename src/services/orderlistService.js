@@ -1,9 +1,9 @@
 const { orderlistDao } = require('../models');
 
-const CheckOrder = async (userId) => {
-  return await orderlistDao.userCheckOrder(userId);
+const getCheckOrderList = async (userId) => {
+  return await orderlistDao.getUserCheckOrder(userId);
 };
 
 module.exports = {
-  CheckOrder
+  getCheckOrderList
 };

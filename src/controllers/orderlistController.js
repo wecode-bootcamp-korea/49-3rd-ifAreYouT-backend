@@ -2,10 +2,10 @@ const { orderlistService } = require('../services');
 const { throwError } = require('../utils');
 const { v4: uuidv4 } = require('uuid');
 
-const CheckOrderController = async (req, res) => {
+const userCheckOrderController = async (req, res) => {
   const userId = req.params.userId;
   try {
-    const checkUserOrder = await orderlistService.CheckOrder(userId);
+    const checkUserOrder = await orderlistService.getCheckOrderList(userId);
 
     if (!checkUserOrder || checkUserOrder.length === 0) {
       throwError(400, 'PURCHASE_HISTORY_NOT_FOUND');
@@ -22,5 +22,5 @@ const CheckOrderController = async (req, res) => {
 };
 
 module.exports = {
-  CheckOrderController,
+  userCheckOrderController,
 };

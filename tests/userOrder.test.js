@@ -59,7 +59,7 @@ describe('user get order', () => {
   });
 
   test('GET_ORDER: valid orderlist', async () => {
-    const res = await request(app).get(`/mypage/check-order/1`).send();
+    const res = await request(app).get(`/orderlists/check-order/1`).send();
     expect(res.status).toBe(200);
     expect(res.body.message).toEqual('GET_ORDER');
   });
@@ -67,7 +67,7 @@ describe('user get order', () => {
   test('INVALID_ORDER_ID: invalid orderlist', async () => {
     const userId = 999;
 
-    const res = await request(app).get(`/mypage/check-order/${userId}`);
+    const res = await request(app).get(`/orderlists/check-order/${userId}`);
     expect(res.status).toBe(400);
     expect(res.body.message).toEqual('PURCHASE_HISTORY_NOT_FOUND');
   });
