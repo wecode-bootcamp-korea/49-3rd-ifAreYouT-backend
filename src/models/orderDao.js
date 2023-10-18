@@ -1,5 +1,5 @@
 const { dataSource } = require('./dataSource');
-const { useTransaction } = require('./useTransaction');
+const { useTransaction } = require('../utils');
 
 const getSeatsDataDao = async (eventId) => {
   const getSeatsQuery = async (queryRunner) => {
