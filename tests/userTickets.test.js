@@ -46,9 +46,9 @@ describe('user get ticket', () => {
     await dataSource.query(`
     INSERT INTO events 
       (id, title, playtime, description, status, start_date, end_date, sales_start_date, sales_end_date,
-      stage_id, category_id, performer_id) 
+      stage_id, category_id, performer_id, promotion_id) 
     VALUES
-     (1, 'testtitle', '2hour', 'test', 'merchantable', NOW(), NOW(), NOW(), NOW(), 1, 1, 1)
+     (1, 'testtitle', '2hour', 'test', 'merchantable', NOW(), NOW(), NOW(), NOW(), 1, 1, 1, 1)
     `);
     await dataSource.query(`
     INSERT INTO times
@@ -76,7 +76,7 @@ describe('user get ticket', () => {
     `);
 
     const userResult = await dataSource.query('SELECT * FROM users WHERE email = ?', ['wecode13@gmil.com']);
-    
+
     userId = userResult[0].id;
     accessToken = jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '30d' });
     
@@ -101,7 +101,7 @@ describe('user get ticket', () => {
 
   test('GET_TICKETS: valid order', async () => {
     const res = await request(app)
-    .get(`/tickets/get-tickets`)
+    .get(`/tickets`)
     .set('Authorization', `Bearer ${accessToken}`);
     expect(res.status).toBe(200);
     expect(res.body.message).toEqual('GET_TICKETS');
@@ -110,7 +110,7 @@ describe('user get ticket', () => {
   test('INVALID_ORDER_ID: invalid order', async () => {
     try {
       const res = await request(app)
-      .get(`/tickets/get-tickets`)
+      .get(`/tickets`)
       .set('Authorization', `Bearer ${accessToken}`);
       expect(res.status).toBe(400);
       expect(res.body.message).toEqual('NOT_FOUND_ORDER');
