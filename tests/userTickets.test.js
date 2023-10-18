@@ -26,7 +26,7 @@ describe('user get ticket', () => {
       `INSERT INTO times (id, event_time, event_day, event_id) VALUES (1, '03', '23-03-23', 1)`,
     );
     await dataSource.query(
-      `INSERT INTO seats (id, row_name, col_name, stage_id, grade_id) VALUES (1, 'test', 123, 1, 1)`,
+      `INSERT INTO seats (row_name, col_name, stage_id, grade_id) VALUES ('test', 123, 1, 1)`,
     );
     await dataSource.query(`INSERT INTO orders (id, user_id, order_no, order_status)
     VALUES (1, 1, 123, 'pending');`);

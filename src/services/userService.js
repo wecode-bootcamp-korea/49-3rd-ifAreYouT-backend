@@ -23,8 +23,13 @@ const CheckOrder = async (userId) => {
   return await userDao.userCheckOrder(userId);
 };
 
+const getLikedEvents = async (userId) => {
+  return await userDao.userLike(userId);
+};
+
 module.exports = {
   isOrderValid,
   userTickets,
   CheckOrder,
+  getLikedEvents
 };
