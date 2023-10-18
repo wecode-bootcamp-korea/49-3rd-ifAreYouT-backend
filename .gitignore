@@ -3,6 +3,9 @@
 
 ### dotenv ###
 .env
+.env.prod
+.env.test
+.env.dev
 
 ### Linux ###
 *~
