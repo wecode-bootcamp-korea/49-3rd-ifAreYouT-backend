@@ -1,5 +1,5 @@
-const userService = require("./userService");
+const orderlistService = require("./orderlistService");
 
 module.exports = {
-    userService
+    orderlistService
 }

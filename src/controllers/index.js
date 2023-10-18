@@ -1,5 +1,5 @@
-const userController = require("./userController")
+const orderlistController = require("./orderlistController")
 
 module.exports = {
-    userController
+    orderlistController
 }
