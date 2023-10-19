@@ -1,13 +1,19 @@
+const { isEmpty } = require('lodash');
 const { orderService } = require('../services');
-const { throwError } = require('../utils');
+const { throwError, isEmptyData } = require('../utils');
 
-const { getSeatsDataService } = orderService;
+const { getSeatsDataService, isEventExistService } = orderService;
 
 const getSeatsController = async (req, res, next) => {
   try {
     const { eventId } = req.query;
+    if (!eventId)
+      throwError(400, 'required query parameter eventId is missing');
+    const eventExist = await isEventExistService(eventId);
+    if (isEmpty(eventExist)) throwError(400, 'no event data');
     const seatsData = await getSeatsDataService(eventId);
-    if (!seatsData) throwError(400, 'no seat data');
+    console.log(seatsData);
+    if (isEmptyData(seatsData)) throwError(400, 'no seat data');
     res.status(200).json({
       data: seatsData,
     });

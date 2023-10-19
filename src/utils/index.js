@@ -1,4 +1,5 @@
 const { default: Axios } = require('axios');
+const _ = require('lodash');
 const jwt = require('jsonwebtoken');
 
 const axios = Axios.create({
@@ -59,15 +60,19 @@ const throwError = (code, message) => {
   throw error;
 };
 
+const isEmptyData = (data) => {
+  return _.every(data, (value) => _.isEmpty(value));
+};
+
 const useTransaction = async (dataSource, queries) => {
   const queryRunner = await dataSource.createQueryRunner();
   await queryRunner.connect();
   await queryRunner.startTransaction();
   try {
-    const results = [];
+    const results = {};
     for (const query of queries) {
       const result = await query(queryRunner);
-      results.push(result);
+      Object.assign(results, result);
     }
     await queryRunner.commitTransaction();
     return results;
@@ -87,4 +92,5 @@ module.exports = {
   isValidData,
   throwError,
   useTransaction,
+  isEmptyData,
 };
