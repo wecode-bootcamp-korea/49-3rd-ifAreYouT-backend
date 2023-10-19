@@ -60,6 +60,7 @@ describe('user get order', () => {
     VALUES 
       (1, 1, 1, 1, 10.50, 'pending');
     `);
+    await dataSource.query(`INSERT INTO promotions (id) VALUES (1);`)
     await dataSource.query(`DELETE FROM events`);
     await dataSource.query(`
     INSERT INTO events 
@@ -106,6 +107,7 @@ describe('user get order', () => {
     await dataSource.query(`TRUNCATE seats`);
     await dataSource.query(`TRUNCATE orders`);
     await dataSource.query(`TRUNCATE event_orders`);
+    await dataSource.query(`TRUNCATE promotions`);
     await dataSource.query(`SET foreign_key_checks = 1;`);
     await dataSource.destroy();
   });
