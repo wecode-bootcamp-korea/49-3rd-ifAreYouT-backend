@@ -1,12 +1,15 @@
 const { throwError, verifyToken } = require('../utils');
 
-exports.verificateToken = (req, res, next) => {
+exports.verificateToken = (req, _, next) => {
   const token = req.header('Authorization');
   try {
     if (!token) throwError(401);
-    const { data } = verifyToken(token);
-    req.userData = data;
-    next();
+    const data = verifyToken(token);
+    if (data) {
+      req.userData = data;
+      next();
+    }
+    throwError(401, 'invalid token');
   } catch (err) {
     console.error(err);
     next(err);

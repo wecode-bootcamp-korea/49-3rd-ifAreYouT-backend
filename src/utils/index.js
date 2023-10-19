@@ -25,7 +25,15 @@ const generateToken = (data) => {
  * @returns decode 된 토큰
  */
 const verifyToken = (token) => {
-  return jwt.verify(token.replace('Bearer ', ''), process.env.JWT_SECRET);
+  try {
+    const decoded = jwt.verify(
+      token.replace('Bearer ', ''),
+      process.env.JWT_SECRET,
+    );
+    return decoded;
+  } catch (error) {
+    return null;
+  }
 };
 
 /**
