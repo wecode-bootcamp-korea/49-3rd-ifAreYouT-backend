@@ -1,3 +1,3 @@
-const orderlistDao = require("./orderlistDao");
+const orderDao = require("./orderDao");
 
-module.exports = { orderlistDao }
+module.exports = { orderDao }

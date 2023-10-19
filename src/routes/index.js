@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-const orderlistRouter = require("./orderlistRouter");
+const orderRouter = require("./orderRouter");
 
 router.get('/', (req, res, next) => {
   res.send('OK');
 });
 
-router.use('/orderlists', orderlistRouter);
+router.use('/orders', orderRouter);
 
 module.exports = router;
