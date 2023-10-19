@@ -1,3 +1,3 @@
-const confirmationsDao = require("./confirmationsDao");
+const eventDao = require('./eventDao');
 
-module.exports = { confirmationsDao }
+module.exports = { eventDao };

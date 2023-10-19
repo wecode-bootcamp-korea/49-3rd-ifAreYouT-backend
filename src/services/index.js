@@ -1,5 +1,5 @@
-const confirmationsService = require("./confirmationsService");
+const eventService = require("./eventService");
 
 module.exports = {
-    confirmationsService
-}
+  eventService,
+};

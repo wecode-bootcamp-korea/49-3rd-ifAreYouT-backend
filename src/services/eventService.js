@@ -1,7 +1,7 @@
-const { confirmationsDao } = require('../models');
+const { eventDao } = require('../models');
 
 const getLikedEvents = async (userId) => {
-  const likesInfo = confirmationsDao.getUserLikeById(userId)
+  const likesInfo = eventDao.getUserLikeById(userId);
 
   if (likesInfo.length === 0) {
     throwError(400, 'INVALID_likes');

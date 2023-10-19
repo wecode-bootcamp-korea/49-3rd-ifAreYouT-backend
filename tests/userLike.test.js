@@ -88,7 +88,7 @@ describe('user get likes', () => {
 
   test('GET_likes: user likes', async () => {
     const res = await request(app)
-      .get(`/confirmations`)
+      .get(`/events`)
       .set('Authorization', `Bearer ${accessToken}`);
     expect(res.status).toBe(200);
     expect(res.body.message).toEqual('LIKED_EVENTS_FOUND');
@@ -97,7 +97,7 @@ describe('user get likes', () => {
   test('INVALID_LIKES: invalid user likes', async () => {
     try {
       const res = await request(app)
-        .get(`/confirmations`)
+        .get(`/events`)
         .set('Authorization', `Bearer ${accessToken}`);
       expect(res.status).toBe(400);
       expect(res.body.message).toEqual('NOT_FOUND_LIKES');
