@@ -1,6 +1,6 @@
 const { dataSource } = require('./dataSource');
 
-const userLike = async (userId) => {
+const getUserLikeById = async (userId) => {
   const user = await dataSource.query(
     `
     SELECT events.*
@@ -13,5 +13,5 @@ const userLike = async (userId) => {
 };
 
 module.exports = {
-  userLike,
+  getUserLikeById,
 };

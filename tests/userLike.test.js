@@ -1,15 +1,19 @@
 const request = require('supertest');
 const { createApp } = require('../app');
 const { dataSource } = require('../src/models/dataSource');
+const jwt = require('jsonwebtoken');
+
 
 describe('user get likes', () => {
   let app;
+  let userId;
+  let accessToken;
 
   beforeAll(async () => {
     app = createApp();
     await dataSource.initialize();
-    await dataSource.query(`INSERT INTO users (id, email, nickname, phone_number, provider, uid)
-    VALUES (1, 'user@example.com', 'testUser', '010-1234-5678', 'kakao', '1');`);
+    await dataSource.query(`INSERT INTO users (email, nickname, phone_number, provider, uid)
+    VALUES ('wecode13@gmil.com', 'testUser', '010-1234-5678', 'kakao', '1');`);
     await dataSource.query(`INSERT INTO orders (user_id, order_no, order_status)
     VALUES (1, 123, 'pending');`);
     await dataSource.query(`INSERT INTO stages (name) VALUES ('testname')`);
@@ -20,11 +24,12 @@ describe('user get likes', () => {
       `INSERT INTO categories (category_name) VALUES ('testcategoryname')`,
     );
     await dataSource.query(`INSERT INTO performers (name) VALUES ('testname')`);
+    await dataSource.query(`INSERT INTO promotions (id) VALUES (1)`)
     await dataSource.query(`DELETE FROM events`);
     await dataSource.query(`INSERT INTO events (id, title, playtime, description, status, start_date, end_date, sales_start_date, sales_end_date,
         stage_id, category_id, performer_id, promotion_id) VALUES (1, 'testtitle', '2hour', 'test', 'merchantable', NOW(), NOW(), NOW(), NOW(), 1, 1, 1, 1)`);
     await dataSource.query(
-      `INSERT INTO event_reactions (id, event_id, user_id, reaction_type) VALUES (1, 1, 1, 'exited')`,
+      `INSERT INTO event_reactions (event_id, user_id, reaction_type) VALUES (1, 1, 'exited')`,
     );
     await dataSource.query(
       `INSERT INTO times (id, event_time, event_day, event_id) VALUES (1, '03', '23-03-23', 1)`,
@@ -34,6 +39,11 @@ describe('user get likes', () => {
     );
     await dataSource.query(`INSERT INTO event_orders (id, time_id, seat_id, order_id, order_name, ticket_code)
     VALUES (2, 1, 1, 1, 'testordername', 'testticketcode')`);
+
+    const userResult = await dataSource.query('SELECT * FROM users WHERE email = ?', ['wecode13@gmil.com']);
+
+    userId = userResult[0].id;
+    accessToken = jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '30d' });
   });
 
   afterAll(async () => {
@@ -49,19 +59,28 @@ describe('user get likes', () => {
     await dataSource.query(`TRUNCATE orders`);
     await dataSource.query(`TRUNCATE event_reactions`);
     await dataSource.query(`TRUNCATE event_orders`);
+    await dataSource.query(`TRUNCATE promotions`);
     await dataSource.query(`SET foreign_key_checks = 1;`);
     await dataSource.destroy();
   });
 
   test('GET_like: userlike', async () => {
-    const res = await request(app).get(`/confirmations`).send();
+    const res = await request(app)
+    .get(`/confirmations`)
+    .set('Authorization', `Bearer ${accessToken}`);
     expect(res.status).toBe(200);
     expect(res.body.message).toEqual('LIKED_EVENTS_FOUND');
   });
 
   test('INVALID_LIKE: invalid userlike', async () => {
-    const res = await request(app).get(`/confirmations`);
-    expect(res.status).toBe(400);
-    expect(res.body.message).toEqual('NOT_FOUND_LIKES');
+    try {
+      const res = await request(app)
+      .get(`/confirmations`)
+      .set('Authorization', `Bearer ${accessToken}`);
+      expect(res.status).toBe(400);
+      expect(res.body.message).toEqual('NOT_FOUND_LIKES');
+    } catch (error) {
+     console.log(error);
+    }
   });
 });

@@ -3,17 +3,17 @@ const { throwError } = require('../utils');
 const { v4: uuidv4 } = require('uuid');
 
 const userByLikeController = async (req, res) => {
-  const userId = req.params.userId;
+  const userId = req.userData
   try {
-    const likedEvents = await confirmationsService.getLikedEvents(userId);
+    const likesInfo = await confirmationsService.getLikedEvents(userId);
 
-    if (likedEvents.length === 0) {
+    if (!likesInfo) {
       throwError(400, 'NOT_FOUND_LIKES');
     }
 
     res.status(200).json({
       message: 'LIKED_EVENTS_FOUND',
-      data: likedEvents,
+      data: likesInfo,
     });
   } catch (error) {
     console.log(error);

@@ -280,7 +280,7 @@ CREATE TABLE `questions` (
 CREATE TABLE `schema_migrations` (
   `version` varchar(128) NOT NULL,
   PRIMARY KEY (`version`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -305,8 +305,8 @@ CREATE TABLE `seat_grades` (
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `seats` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `row` varchar(10) NOT NULL,
-  `col` int NOT NULL,
+  `row_name` varchar(10) NOT NULL,
+  `col_name` int NOT NULL,
   `stage_id` int NOT NULL,
   `grade_id` int NOT NULL,
   PRIMARY KEY (`id`),
@@ -370,7 +370,7 @@ CREATE TABLE `users` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping routines for database 'ifAreYouT'
+-- Dumping routines for database 'areyout_test'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -408,5 +408,6 @@ INSERT INTO `schema_migrations` (version) VALUES
   ('20231012080411'),
   ('20231012080453'),
   ('20231012080543'),
-  ('20231012080624');
+  ('20231012080624'),
+  ('20231019060638');
 UNLOCK TABLES;
