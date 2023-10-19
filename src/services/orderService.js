@@ -1,7 +1,12 @@
 const { orderDao } = require('../models');
+const { throwError } = require('../utils');
 
 const getOrderByUserId = async (userId) => {
-  return await orderDao.getUserByOrder(userId);
+  const orderInfo = orderDao.getUserByOrder(userId);
+  if (orderInfo.length === 0) {
+    throwError(400, 'INVALID_ORDER');
+  }
+  return orderInfo;
 };
 
 module.exports = {

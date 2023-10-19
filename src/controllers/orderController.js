@@ -5,15 +5,14 @@ const { v4: uuidv4 } = require('uuid');
 const getUserOrderController = async (req, res) => {
   const userId = req.userData
   try {
-    const getUserOrder = await orderService.getOrderByUserId(userId);
+    const orderInfo = await orderService.getOrderByUserId(userId);
 
-    if (!getUserOrder || getUserOrder.length === 0) {
-      throwError(400, 'PURCHASE_HISTORY_NOT_FOUND');
+    if (!orderInfo) {
+      throwError(400, 'NOT_FOUND_ORDER');
     }
-
     res.status(200).json({
       message: 'GET_ORDER',
-      data: getUserOrder,
+      data: orderInfo,
     });
   } catch (error) {
     console.log(error);
