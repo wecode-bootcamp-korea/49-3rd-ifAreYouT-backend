@@ -120,7 +120,7 @@ describe('user get ticket', () => {
     .get(`/preorder-pass`)
     .set('Authorization', `Bearer ${accessToken}`);
     expect(res.status).toBe(200);
-    expect(res.body.message).toEqual('GET_ORDERPASS');
+    expect(res.body).toEqual('GET_ORDERPASS');
   });
 
   test('INVALID_ORDERPASS: invalid orderpass', async () => {
