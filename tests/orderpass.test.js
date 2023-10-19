@@ -117,7 +117,7 @@ describe('user get ticket', () => {
 
   test('GET_orderpass: valid orderpass', async () => {
     const res = await request(app)
-    .get(`/orderpass`)
+    .get(`/preorder-pass`)
     .set('Authorization', `Bearer ${accessToken}`);
     expect(res.status).toBe(200);
     expect(res.body.message).toEqual('GET_ORDERPASS');
@@ -126,7 +126,7 @@ describe('user get ticket', () => {
   test('INVALID_ORDERPASS: invalid orderpass', async () => {
     try {
       const res = await request(app)
-      .get(`/orderpass`)
+      .get(`/preorder-pass`)
       .set('Authorization', `Bearer ${accessToken}`);
       expect(res.status).toBe(400);
       expect(res.body.message).toEqual('NOT_FOUND_ORDERPASS');

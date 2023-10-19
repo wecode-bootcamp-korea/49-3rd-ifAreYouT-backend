@@ -2,7 +2,7 @@ const { orderpassService } = require('../services');
 const { throwError } = require('../utils');
 const { v4: uuidv4 } = require('uuid');
 
-const userOrderPassController = async (req, res) => {
+const getUserPreorderPassByUserId = async (req, res) => {
   const userId = req.userData;
   try {
     const orderpassInfo = await orderpassService.userOrderPassInfo(userId);
@@ -22,5 +22,5 @@ const userOrderPassController = async (req, res) => {
 };
 
 module.exports = {
-  userOrderPassController,
+  getUserPreorderPassByUserId,
 };
