@@ -8,8 +8,9 @@ exports.verificateToken = (req, _, next) => {
     if (data) {
       req.userData = data;
       next();
+    } else {
+      throwError(401, 'invalid token');
     }
-    throwError(401, 'invalid token');
   } catch (err) {
     console.error(err);
     next(err);
