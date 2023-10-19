@@ -42,6 +42,7 @@ describe('user get ticket', () => {
     VALUES 
       ('testname')
     `);
+    await dataSource.query(`INSERT INTO promotions (id) VALUES (1)`)
     await dataSource.query(`DELETE FROM events`);
     await dataSource.query(`
     INSERT INTO events 
@@ -60,7 +61,7 @@ describe('user get ticket', () => {
     INSERT INTO seats
      (row_name, col_name, stage_id, grade_id)
     VALUES
-      ('test', 123, 1, 1)
+      ('test', '123', 1, 1)
     `);
     await dataSource.query(`
     INSERT INTO orders
@@ -95,6 +96,7 @@ describe('user get ticket', () => {
     await dataSource.query(`TRUNCATE seats`);
     await dataSource.query(`TRUNCATE orders`);
     await dataSource.query(`TRUNCATE event_orders`);
+    await dataSource.query(`TRUNCATE promotions`)
     await dataSource.query(`SET foreign_key_checks = 1;`);
     await dataSource.destroy();
   });
