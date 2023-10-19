@@ -3,7 +3,7 @@ const { throwError } = require('../utils');
 const { v4: uuidv4 } = require('uuid');
 
 const getTicketInfoByUserId = async (req, res) => {
-  const userId = req.userData
+  const userId = req.userData;
   try {
     const ticketInfo = await ticketService.getTicketInfo(userId);
 

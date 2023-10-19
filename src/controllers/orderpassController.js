@@ -2,18 +2,18 @@ const { orderpassService } = require('../services');
 const { throwError } = require('../utils');
 const { v4: uuidv4 } = require('uuid');
 
-const CheckOrderController = async (req, res) => {
-  const userId = req.params.userId;
+const userOrderPassController = async (req, res) => {
+  const userId = req.userData;
   try {
-    const checkUserOrder = await orderpassService.CheckOrder(userId);
+    const orderpassInfo = await orderpassService.userOrderPassInfo(userId);
 
-    if (!checkUserOrder || checkUserOrder.length === 0) {
-      throwError(400, 'PURCHASE_HISTORY_NOT_FOUND');
+    if (!orderpassInfo) {
+      throwError(400, 'NOT_FOUND_ORDERPASS');
     }
 
     res.status(200).json({
-      message: 'GET_ORDER',
-      data: checkUserOrder,
+      message: 'GET_ORDERPASS',
+      data: orderpassInfo,
     });
   } catch (error) {
     console.log(error);
@@ -22,5 +22,5 @@ const CheckOrderController = async (req, res) => {
 };
 
 module.exports = {
-  CheckOrderController,
+  userOrderPassController,
 };
