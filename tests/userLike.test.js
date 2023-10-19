@@ -46,8 +46,8 @@ describe('user get likes', () => {
       VALUES (1, 'testtitle', '2hour', 'test', 'merchantable', NOW(), NOW(), NOW(), NOW(), 1, 1, 1, 1);
     `);
     await dataSource.query(`
-      INSERT INTO event_reactions (event_id, user_id, reaction_type)
-      VALUES (1, 1, 'exited');
+      INSERT INTO event_reactions (id, reaction_type, event_id, user_id)
+      VALUES (1, 'exited', 1, 1);
     `);
     await dataSource.query(`
       INSERT INTO times (id, event_time, event_day, event_id)
@@ -70,7 +70,6 @@ describe('user get likes', () => {
 
   afterAll(async () => {
     await dataSource.query(`SET foreign_key_checks = 0;`);
-    await dataSource.query(`DELETE FROM event_reactions`);
     await dataSource.query(`TRUNCATE users`);
     await dataSource.query(`TRUNCATE stages`);
     await dataSource.query(`TRUNCATE seat_grades`);
