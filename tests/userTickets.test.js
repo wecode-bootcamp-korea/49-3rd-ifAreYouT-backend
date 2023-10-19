@@ -26,9 +26,9 @@ describe('user get ticket', () => {
     `);
     await dataSource.query(`
     INSERT INTO seat_grades 
-      (grade, price) 
+      (grade, price, stage_id) 
     VALUES 
-      (1, 1)
+      (1, 1, 1)
     `);
     await dataSource.query(`
     INSERT INTO categories
