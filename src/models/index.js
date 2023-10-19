@@ -1,3 +1,4 @@
 const ticketDao = require("./ticketDao");
+const orderpassDao = require("./orderpassDao");
 
-module.exports = { ticketDao }
+module.exports = { ticketDao, orderpassDao }
