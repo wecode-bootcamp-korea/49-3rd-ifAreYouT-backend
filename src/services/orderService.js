@@ -1,5 +1,4 @@
-const { orderDao } = require('../models');
-const { getSeatsDataDao, isEventExistDao } = orderDao;
+const { getSeatsDataDao, isEventExistDao } = require('../models').orderDao;
 
 const isEventExistService = (eventId) => {
   return isEventExistDao(eventId);

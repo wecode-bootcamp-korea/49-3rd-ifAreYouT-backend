@@ -1,5 +1,5 @@
-const { dataSource } = require('../dataSource');
-const { useTransaction } = require('../../utils');
+const { dataSource } = require('./dataSource');
+const { useTransaction } = require('../utils');
 
 const isEventExistDao = async (eventId) => {
   const [eventExist] = await dataSource.query(
