@@ -1,7 +1,5 @@
-const { getSeatsDataDao } = require('./orderDao');
+const orderDao = require('./orderDao');
 
 module.exports = {
-  orderDao: {
-    getSeatsDataDao,
-  },
+  orderDao,
 };

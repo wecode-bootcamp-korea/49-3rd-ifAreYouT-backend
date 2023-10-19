@@ -1,6 +1,15 @@
-const { dataSource } = require('./dataSource');
-const { useTransaction } = require('../utils');
+const { dataSource } = require('../dataSource');
+const { useTransaction } = require('../../utils');
 
+const isEventExistDao = async (eventId) => {
+  const [eventExist] = await dataSource.query(
+    `
+    SELECT id FROM events WHERE id = ?
+    `,
+    [eventId],
+  );
+  return eventExist;
+};
 const getSeatsDataDao = async (eventId) => {
   const getSeatsQuery = async (queryRunner) => {
     const seats = await queryRunner.query(
@@ -48,4 +57,4 @@ const getSeatsDataDao = async (eventId) => {
   return result;
 };
 
-module.exports = { getSeatsDataDao };
+module.exports = { getSeatsDataDao, isEventExistDao };
