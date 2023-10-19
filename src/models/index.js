@@ -1,3 +1,4 @@
+const ticketDao = require('./ticketDao');
 const eventDao = require('./eventDao');
 
-module.exports = { eventDao };
+module.exports = { ticketDao, eventDao };
