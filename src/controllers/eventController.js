@@ -4,8 +4,9 @@ const { v4: uuidv4 } = require('uuid');
 
 const userByLikeController = async (req, res) => {
   const userId = req.userData;
+  const reactionType = req.query.reaction_type || 'exited';
   try {
-    const likesInfo = await eventService.getLikedEvents(userId);
+    const likesInfo = await eventService.getLikedEvents(userId, reactionType);
 
     if (!likesInfo) {
       throwError(400, 'NOT_FOUND_LIKES');
