@@ -2,7 +2,7 @@ const { orderDao } = require('../models');
 const { throwError } = require('../utils');
 
 const getOrderByUserId = async (userId) => {
-  const orderInfo = orderDao.getUserByOrder(userId);
+  const orderInfo = orderDao.getOrderByUsersId(userId);
   if (orderInfo.length === 0) {
     throwError(400, 'INVALID_ORDER');
   }
