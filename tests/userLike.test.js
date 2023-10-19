@@ -18,7 +18,7 @@ describe('user get likes', () => {
     VALUES (1, 123, 'pending');`);
     await dataSource.query(`INSERT INTO stages (name) VALUES ('testname')`);
     await dataSource.query(
-      `INSERT INTO seat_grades (grade, price) VALUES (1, 1)`,
+      `INSERT INTO seat_grades (grade, price, stage_id) VALUES (1, 1, 1)`,
     );
     await dataSource.query(
       `INSERT INTO categories (category_name) VALUES ('testcategoryname')`,

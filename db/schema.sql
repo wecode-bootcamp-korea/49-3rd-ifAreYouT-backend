@@ -127,7 +127,7 @@ CREATE TABLE `events` (
   `stage_id` int NOT NULL,
   `category_id` int NOT NULL,
   `performer_id` int NOT NULL,
-  `promotion_id` int NOT NULL,
+  `promotion_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `category_id` (`category_id`),
   KEY `stage_id` (`stage_id`),
@@ -149,7 +149,7 @@ CREATE TABLE `events` (
 CREATE TABLE `orders` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
-  `order_no` varchar(255) NOT NULL,
+  `order_no` varchar(20) NOT NULL,
   `order_status` enum('pending','purchased','canceled') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -263,9 +263,11 @@ CREATE TABLE `promotions` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `questions` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `performer_question` varchar(512) NOT NULL,
   `performer_answer` tinyint NOT NULL,
   `promotion_question_id` int NOT NULL,
+  PRIMARY KEY (`id`),
   KEY `promotion_question_id` (`promotion_question_id`),
   CONSTRAINT `questions_ibfk_1` FOREIGN KEY (`promotion_question_id`) REFERENCES `promotion_questions` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -293,7 +295,10 @@ CREATE TABLE `seat_grades` (
   `id` int NOT NULL AUTO_INCREMENT,
   `grade` char(1) NOT NULL,
   `price` decimal(10,0) NOT NULL,
-  PRIMARY KEY (`id`)
+  `stage_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `stage_id` (`stage_id`),
+  CONSTRAINT `seat_grades_ibfk_1` FOREIGN KEY (`stage_id`) REFERENCES `stages` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -409,5 +414,13 @@ INSERT INTO `schema_migrations` (version) VALUES
   ('20231012080453'),
   ('20231012080543'),
   ('20231012080624'),
+<<<<<<< HEAD
   ('20231019060638');
+=======
+  ('20231014152629'),
+  ('20231016152148'),
+  ('20231016152204'),
+  ('20231016152211'),
+  ('20231016152214');
+>>>>>>> main
 UNLOCK TABLES;
