@@ -1,8 +1,8 @@
 const express = require('express');
-const { orderpassController } = require('../controllers');
+const { preorderpassController } = require('../controllers');
 const { verificateToken } = require('../middlewares');
 const router = express.Router();
 
-router.get("/", verificateToken, orderpassController.getUserPreorderPassByUserId);
+router.get("/", verificateToken, preorderpassController.getUserPreorderPassByUserId);
 
 module.exports = router;

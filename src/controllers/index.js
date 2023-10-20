@@ -1,7 +1,7 @@
 const ticketController = require('./ticketController');
-const orderpassController = require('./orderpassController');
+const preorderpassController = require('./preorderpassController');
 
 module.exports = {
   ticketController,
-  orderpassController,
+  preorderpassController,
 };
