@@ -3,7 +3,7 @@ const { createApp } = require('../app');
 const { dataSource } = require('../src/models/dataSource');
 const jwt = require('jsonwebtoken');
 
-describe('user get likes', () => {
+describe('get events with reaction by user', () => {
   let app;
   let userId;
   let accessToken;
@@ -95,14 +95,10 @@ describe('user get likes', () => {
   });
 
   test('INVALID_LIKES: invalid user likes', async () => {
-    try {
       const res = await request(app)
         .get(`/events`)
         .set('Authorization', `Bearer ${accessToken}`);
       expect(res.status).toBe(400);
-      expect(res.body.message).toEqual('NOT_FOUND_LIKES');
-    } catch (error) {
-      console.log(error);
-    }
+      expect(res.body.message).toEqual('LIKED_EVENTS_NOT_FOUND');
   });
 });

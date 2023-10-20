@@ -1,17 +1,25 @@
 const { dataSource } = require('./dataSource');
 
-const getUserLikeById = async (userId, reactionType) => {
-  const user = await dataSource.query(
-    `
-    SELECT events.*
-    FROM events
-    INNER JOIN event_reactions ON events.id = event_reactions.event_id
-    WHERE event_reactions.user_id = ? AND event_reactions.reaction_type = ?;`,
-    [userId, reactionType],
-  );
+const getLikedEventsByUserId = async (userId, reactionType) => {
+  const user = await dataSource.query(`
+  SELECT
+      e.id AS event_id,
+      e.title AS event_name,
+      e.start_date AS event_date,
+      p.name AS performer,
+      c.category_name AS category,
+      ei.thumbnail_image_url AS image_url
+  FROM events AS e
+  JOIN event_reactions AS er ON e.id = er.event_id
+  JOIN performers AS p ON e.performer_id = p.id
+  JOIN categories AS c ON e.category_id = c.id
+  JOIN event_images AS ei ON e.id = ei.event_id
+  WHERE er.user_id = ? AND er.reaction_type = ?;
+  `
+  ,[userId, reactionType]);
   return user;
 };
 
 module.exports = {
-  getUserLikeById
+  getLikedEventsByUserId
 };
