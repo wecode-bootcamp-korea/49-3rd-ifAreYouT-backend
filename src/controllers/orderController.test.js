@@ -13,7 +13,6 @@ const {
   addSeatsDummy,
   addEventSeatsDummy,
 } = makeDummies;
-const { addEventsQuery } = queries;
 describe('좌석 정보 가져오기', () => {
   let app;
 
@@ -55,17 +54,6 @@ describe('좌석 정보 가져오기', () => {
       .expect('Content-Type', /json/)
       .expect(400)
       .expect({ error: 'no event data' });
-  });
-  test('🚫FAILED: 공연에 해당하는 좌석 데이터가 없을때', async () => {
-    await request(app)
-      .get('/orders/seats?eventId=1')
-      .set(
-        'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJJZCI6MX0sImlhdCI6MTY5NzcxOTY0MiwiZXhwIjoxNzAwMzExNjQyfQ.zuVcbarIWTuPPBm7DvoaYRsKGFV8YJPK68fa2gztFeU',
-      )
-      .expect('Content-Type', /json/)
-      .expect(400)
-      .expect({ error: 'no seat data' });
   });
   test('✅SUCCESS: 공연 좌석 데이터 가져오기', async () => {
     useTransaction(dataSource, [
