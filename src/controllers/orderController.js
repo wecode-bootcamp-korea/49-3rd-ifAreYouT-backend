@@ -2,7 +2,7 @@ const { orderService } = require('../services');
 const { throwError } = require('../utils');
 const { v4: uuidv4 } = require('uuid');
 
-const getUserOrderController = async (req, res) => {
+const getUserOrder = async (req, res) => {
   const userId = req.userData
   try {
     const orderInfo = await orderService.getOrderByUserId(userId);
@@ -21,5 +21,5 @@ const getUserOrderController = async (req, res) => {
 };
 
 module.exports = {
-  getUserOrderController,
+  getUserOrder,
 };

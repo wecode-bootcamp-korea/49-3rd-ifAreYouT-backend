@@ -1,6 +1,6 @@
 const { dataSource } = require('./dataSource');
 
-const getOrderByUsersId = async (userId) => {
+const getOrderByUserId = async (userId) => {
   const user = await dataSource.query(
     `
     SELECT
@@ -33,5 +33,5 @@ const getOrderByUsersId = async (userId) => {
 };
 
 module.exports = {
-  getOrderByUsersId,
+  getOrderByUserId,
 };
