@@ -1,8 +1,7 @@
 const { isEmpty } = require('lodash');
-const { orderService } = require('../services');
 const { throwError } = require('../utils');
-
-const { getSeatsDataService, isEventExistService } = orderService;
+const { getSeatsDataService, isEventExistService } =
+  require('../services').orderService;
 
 const getSeatsController = async (req, res, next) => {
   try {

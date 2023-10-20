@@ -1,10 +1,7 @@
-const { getSeatsDataService, isEventExistService } = require('./orderService');
+const orderService = require('./orderService');
 const ticketService = require('./ticketService');
 
 module.exports = {
-  orderService: {
-    getSeatsDataService,
-    isEventExistService,
-  },
+  orderService,
   ticketService,
 };

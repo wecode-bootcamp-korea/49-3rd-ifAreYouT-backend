@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { orderController } = require('../controllers');
-const { getSeatsController } = orderController;
+const { getSeatsController } = require('../controllers').orderController;
 
 router.use('/seats', getSeatsController);
 
