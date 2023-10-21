@@ -2,10 +2,11 @@ const { preorderpassService } = require('../services');
 const { throwError } = require('../utils');
 const { v4: uuidv4 } = require('uuid');
 
-const getUserPreorderPassByUserId = async (req, res) => {
+const getUserPreorderPassByUserId = async (req, res, next) => {
   const userId = req.userData;
+  const { preorderPassesId } = req.query;
   try {
-    const orderpassInfo = await preorderpassService.getUserOrderPassByUserId(userId);
+    const orderpassInfo = await preorderpassService.getUserOrderPassByUserId(userId, preorderPassesId);
 
     if (!orderpassInfo) {
       throwError(400, 'NOT_FOUND_ORDERPASS');
@@ -17,7 +18,7 @@ const getUserPreorderPassByUserId = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(400).json(error);
+    next(error);
   }
 };
 
