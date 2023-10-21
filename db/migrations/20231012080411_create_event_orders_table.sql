@@ -1,6 +1,6 @@
 -- migrate:up
 CREATE TABLE `event_orders` (
-  `id` integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
   `order_name` varchar(20),
   `ticket_code` varchar(200),
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
