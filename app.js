@@ -7,6 +7,13 @@ require('dotenv').config({ path: dotenvPath });
 
 const app = express();
 
+const createApp = () => {
+  app.use(express.json());
+  app.use(cors());
+  app.use(morgan("combined"));
+  return app;
+};
+
 const indexRouter = require('./src/routes');
 
 app.set('port', process.env.PORT || 8000);
@@ -20,6 +27,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
 app.use('/', indexRouter);
 
 app.use((req, _, next) => {
@@ -28,6 +36,7 @@ app.use((req, _, next) => {
   next(error);
 });
 
+
 app.use((err, _, res, next) => {
   res.status(err.status || 500);
   return res.json({
@@ -35,4 +44,4 @@ app.use((err, _, res, next) => {
   });
 });
 
-module.exports = app;
+module.exports = { app, createApp };
