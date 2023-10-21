@@ -62,9 +62,9 @@ describe('get events with reaction by user', () => {
       VALUES (2, 1, 1, 1, 'testordername', 'testticketcode');
     `);
 
-    const userResult = await dataSource.query('SELECT * FROM users WHERE email = ?', ['wecode13@gmil.com']);
+    const userData = await dataSource.query('SELECT id FROM users WHERE id = ?', [1]);
 
-    userId = userResult[0].id;
+    userId = userData.id
     accessToken = jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '30d' });
   });
 
@@ -90,15 +90,16 @@ describe('get events with reaction by user', () => {
     const res = await request(app)
       .get(`/events`)
       .set('Authorization', `Bearer ${accessToken}`);
-    expect(res.status).toBe(200);
-    expect(res.body.message).toEqual('LIKED_EVENTS_FOUND');
+      expect(res.status).toBe(200);
+      expect(res.body.message).toEqual('LIKED_EVENTS_FOUND');
   });
 
   test('INVALID_LIKES: invalid user likes', async () => {
-      const res = await request(app)
-        .get(`/events`)
-        .set('Authorization', `Bearer ${accessToken}`);
-      expect(res.status).toBe(400);
+    const res = await request(app)
+      .get(`/events`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .expect('Content-Type', /json/)
+      .expect(400)
       expect(res.body.message).toEqual('LIKED_EVENTS_NOT_FOUND');
   });
 });
