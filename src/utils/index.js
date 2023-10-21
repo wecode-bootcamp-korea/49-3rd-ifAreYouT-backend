@@ -68,8 +68,18 @@ const throwError = (code, message) => {
   throw error;
 };
 
-const isEmptyData = (data) => {
-  return _.every(data, (value) => _.isEmpty(value));
+const isEmptyObject = (obj) => {
+  return _.every(_.values(obj), (value) => Boolean(value));
+};
+
+const isAllDataHasValue = (data) => {
+  if (Array.isArray(data)) {
+    return _.every(data, (obj) => {
+      return isEmptyObject(obj);
+    });
+  } else {
+    return isEmptyObject(data);
+  }
 };
 
 const useTransaction = async (dataSource, queries) => {
@@ -100,5 +110,6 @@ module.exports = {
   isValidData,
   throwError,
   useTransaction,
-  isEmptyData,
+  isEmptyObject,
+  isAllDataHasValue,
 };
