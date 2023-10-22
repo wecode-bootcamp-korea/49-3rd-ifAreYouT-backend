@@ -17,17 +17,6 @@ const getUserPreorderPassByUserId = async (userId, preorderPassesId) => {
   return hasPreorderPass;
 };
 
-const findUserByPreorderPassId = async (preorderPassesId) => {
-  const [ findPreorderPass ] = await dataSource.query(
-    `
-    SELECT id FROM preorder_passes WHERE id = ?
-    `,
-    [preorderPassesId],
-  );
-  return findPreorderPass
-}
-
 module.exports = {
   getUserPreorderPassByUserId,
-  findUserByPreorderPassId,
 };
