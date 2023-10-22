@@ -3,15 +3,13 @@ const { throwError } = require('../utils');
 const { v4: uuidv4 } = require('uuid');
 
 const createUserController = async (req, res, next) => {
-  const userData = req.userData;
-  const userId = userData ? userData.id : undefined;
 //   const uid = req.body.uid;
   const provider = req.body.provider;
 //   const provider = 'kakao';
   const uid = uuidv4();
   const { email, birthDate, nickname, phoneNumber } = req.body;
 
-  if (!email || !birthDate || !nickname || !phoneNumber || !provider || !uid) {
+  if (!email || !nickname || !phoneNumber || !provider) {
     throwError(400, 'KEY_ERROR');
   }
   try {
@@ -27,10 +25,10 @@ const createUserController = async (req, res, next) => {
       message: 'SUCCESS',
       data: {
         email: email,
-        birthDate: birthDate,
         nickname: nickname,
         phoneNumber: phoneNumber,
-        provider: provider
+        provider: provider,
+        uid: uid
     },
     });
   } catch (error) {
@@ -39,10 +37,9 @@ const createUserController = async (req, res, next) => {
 };
 
 const updateUserController = async (req, res, next) => {
-  const userData = req.userData;
-  const userId = userData ? userData.id : undefined;
+  const { userId } = req.query;
   const { email, birthDate, nickname, phoneNumber } = req.body;
-  if (!email || !birthDate || !nickname || !phoneNumber) {
+  if (!email || !nickname || !phoneNumber) {
     throwError(400, 'KEY_ERROR');
   }
   try {
@@ -57,11 +54,10 @@ const updateUserController = async (req, res, next) => {
       message: 'UPDATE_USER',
       data: {
         email: email,
-        birthDate: birthDate,
         nickname: nickname,
         phoneNumber: phoneNumber,
         userId: userId
-    }
+    } 
     });
   } catch (error) {
     next(error);
