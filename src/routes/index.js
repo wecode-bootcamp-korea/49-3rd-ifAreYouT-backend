@@ -9,6 +9,6 @@ router.get('/', (req, res, next) => {
 });
 
 router.use('/tickets', ticketRouter);
-router.use('/addusers',userRouter);
+router.use('/users',userRouter);
 
 module.exports = router;
