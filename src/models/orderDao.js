@@ -5,16 +5,16 @@ const getOrderByUserId = async (userId) => {
     `
     SELECT
       o.id AS order_id,
-      o.order_no,
-      o.order_status,
-      e.title AS event_name,
-      t.event_time,
+      o.order_no AS orderNo,
+      o.order_status AS orderStatus,
+      e.title AS eventName,
+      t.event_time AS eventTime,
       CONCAT(s.row_name, s.col_name) AS seat,
-      sg.price AS ticket_price,
-      c.category_name,
-      p.name AS performer_name,
-      pm.method AS payment_method,
-      pmt.amount AS payment_amount
+      sg.price AS ticketPrice,
+      c.category_name AS categoryName,
+      p.name AS performerName,
+      pm.method AS paymentMethod,
+      pmt.amount AS paymentAmount
     FROM orders AS o
     INNER JOIN event_orders AS eo ON o.id = eo.order_id
     INNER JOIN events AS e ON eo.time_id = e.id  

@@ -2,12 +2,12 @@ const { orderService } = require('../services');
 const { throwError } = require('../utils');
 const { v4: uuidv4 } = require('uuid');
 
-const getUserOrder = async (req, res) => {
-  const userId = req.userData
+const getUserOrder = async (req, res, next) => {
+  const { userId } = req.query;
   try {
     const orderInfo = await orderService.getOrderByUserId(userId);
 
-    if (!orderInfo) {
+    if (!orderInfo || orderInfo.length === 0) {
       throwError(400, 'NOT_FOUND_ORDER');
     }
     res.status(200).json({
@@ -16,7 +16,7 @@ const getUserOrder = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(400).json(error);
+    next(error)
   }
 };
 
