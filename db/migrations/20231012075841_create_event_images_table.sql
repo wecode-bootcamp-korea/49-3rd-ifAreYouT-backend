@@ -1,6 +1,6 @@
 -- migrate:up
 CREATE TABLE `event_images` (
-  `id` integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
   `event_id` integer NOT NULL,
   `detail_image_url` varchar(512),
   `thumbnail_image_url` varchar(512),

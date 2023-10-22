@@ -280,9 +280,9 @@ CREATE TABLE `questions` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `schema_migrations` (
-  `version` varchar(128) NOT NULL,
+  `version` varchar(128) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`version`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -414,13 +414,9 @@ INSERT INTO `schema_migrations` (version) VALUES
   ('20231012080453'),
   ('20231012080543'),
   ('20231012080624'),
-<<<<<<< HEAD
-  ('20231019051552');
-=======
   ('20231014152629'),
   ('20231016152148'),
   ('20231016152204'),
   ('20231016152211'),
   ('20231016152214');
->>>>>>> main
 UNLOCK TABLES;
