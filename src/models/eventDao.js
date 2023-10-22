@@ -4,8 +4,8 @@ const getLikedEventsByUserId = async (userId, reactionType) => {
   const user = await dataSource.query(`
   SELECT
       e.id AS event_id,
-      e.title AS event_name,
-      e.start_date AS event_date,
+      e.title AS eventName,
+      e.start_date AS eventDate,
       p.name AS performer,
       c.category_name AS category,
       ei.thumbnail_image_url AS image_url

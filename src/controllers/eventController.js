@@ -3,12 +3,12 @@ const { throwError } = require('../utils');
 const { v4: uuidv4 } = require('uuid');
 
 const getLikedEventsByUser = async (req, res, next) => {
-  const userId  = req.userData.id;
+  const { userId } = req.query;
   const reactionType = req.query['reaction-type'] || 'exited';
   try {
     const likesInfo = await eventService.getLikedEvents(userId, reactionType);
 
-    if (!likesInfo) {
+    if (!likesInfo || likesInfo.length === 0) {
       throwError(400, 'LIKED_EVENTS_NOT_FOUND');
     } else {
     res.status(200).json({
