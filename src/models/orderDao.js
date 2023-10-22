@@ -1,5 +1,7 @@
 const { dataSource } = require('./dataSource');
+const _ = require('lodash');
 const { useTransaction } = require('../utils');
+const uuid4 = require('uuid4');
 
 const isEventExistDao = async (eventId) => {
   const [eventExist] = await dataSource.query(
@@ -10,8 +12,11 @@ const isEventExistDao = async (eventId) => {
   );
   return eventExist;
 };
+
+const getOrderIdByOrderNumberQuery = `SELECT id FROM orders WHERE order_no = ?`;
+
 const getSeatsDataDao = async (eventId) => {
-  const getSeatsQuery = async (queryRunner) => {
+  const getSeatsQueryRunner = async (queryRunner) => {
     const seats = await queryRunner.query(
       `
       SELECT
@@ -33,7 +38,7 @@ const getSeatsDataDao = async (eventId) => {
     );
     return { seats };
   };
-  const getDetailsQuery = async (queryRunner) => {
+  const getDetailsQueryRunner = async (queryRunner) => {
     const detail = await queryRunner.query(
       `
       SELECT
@@ -51,22 +56,68 @@ const getSeatsDataDao = async (eventId) => {
     return { detail };
   };
   const result = await useTransaction(dataSource, [
-    getSeatsQuery,
-    getDetailsQuery,
+    getSeatsQueryRunner,
+    getDetailsQueryRunner,
   ]);
   return result;
 };
 
-const updateEventSeatDao = async (datas) => {
-  const seatIds = datas.map((data) => data.seatId);
-  await dataSource.query(
-    `UPDATE event_seats
+const isSeatReservableDao = async (data) => {
+  const { seats } = data;
+  const result = await dataSource.query(
+    `
+    SELECT status FROM event_seats WHERE seat_id IN (?)
+  `,
+    [seats.map((data) => data.seatId)],
+  );
+  return _.every(result, (value) => value.status === 'available');
+};
+
+const updateEventSeatDao = async (data, orderNumber) => {
+  const { userId, seats, timeId } = data;
+  const updateEventSeatsQueryRunner = async (queryRunner) => {
+    const seatIds = seats.map((data) => data.seatId);
+    await queryRunner.query(
+      `UPDATE event_seats
       SET status = 'disabled'
       WHERE seat_id IN (?)
     `,
-    [seatIds],
-  );
-  return 'seat updated';
+      [seatIds],
+    );
+    return { message: 'seat updated' };
+  };
+  const addOrderQueryRunner = async (queryRunner) => {
+    await queryRunner.query(
+      `INSERT INTO orders (user_id, order_no, order_status) VALUES (?, ?, ?)`,
+      [userId, orderNumber, 'pending'],
+    );
+    return { orderNumber };
+  };
+  const addEventOrderByOrderNumberQueryRunner = async (queryRunner) => {
+    const [orderId] = await queryRunner.query(getOrderIdByOrderNumberQuery, [
+      orderNumber,
+    ]);
+    const values = seats
+      .map((data) => {
+        return `(${orderNumber}, '${uuid4()}', ${timeId}, ${data.seatId}, ${
+          orderId.id
+        })`;
+      })
+      .join(', ');
+    await queryRunner.query(
+      `INSERT INTO event_orders (order_number, ticket_code, time_id, seat_id, order_id) VALUES ${values}`,
+    );
+  };
+  useTransaction(dataSource, [
+    updateEventSeatsQueryRunner,
+    addOrderQueryRunner,
+    addEventOrderByOrderNumberQueryRunner,
+  ]);
 };
 
-module.exports = { getSeatsDataDao, isEventExistDao, updateEventSeatDao };
+module.exports = {
+  getSeatsDataDao,
+  isEventExistDao,
+  updateEventSeatDao,
+  isSeatReservableDao,
+};
