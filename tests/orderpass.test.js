@@ -5,8 +5,8 @@ const jwt = require('jsonwebtoken');
 
 describe('user get ticket', () => {
   let app;
-  let userId;
   let accessToken;
+  let userId; 
 
   beforeAll(async () => {
     app = createApp();
@@ -14,9 +14,9 @@ describe('user get ticket', () => {
     await dataSource.query(`DELETE FROM event_reactions`);
     await dataSource.query(`
     INSERT INTO users 
-      (email, nickname, phone_number, provider, uid)
+      (id, email, nickname, phone_number, provider, uid)
     VALUES 
-      ('wecode13@gmil.com', 'testUser', '010-1234-5678', 'kakao', '1');
+      (1, 'wecode13@gmil.com', 'testUser', '010-1234-5678', 'kakao', '1');
     `);
     await dataSource.query(`
     INSERT INTO stages
@@ -51,9 +51,9 @@ describe('user get ticket', () => {
      ('testtitle', '2hour', 'test', 'merchantable', NOW(), NOW(), NOW(), NOW(), 1, 1, 1, 1)
     `);
 
-    const userResult = await dataSource.query('SELECT * FROM users WHERE email = ?', ['wecode13@gmil.com']);
-
+    const userResult = await dataSource.query('SELECT id FROM users WHERE email = ?', ['wecode13@gmil.com']);
     userId = userResult[0].id;
+
     accessToken = jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '30d' });
     
   });
@@ -77,14 +77,17 @@ describe('user get ticket', () => {
     .get(`/preorder-pass`)
     .set('Authorization', `Bearer ${accessToken}`);
     expect(res.status).toBe(200);
-    expect(res.body).toEqual({ message: 'GET_ORDERPASS', data: [] });
+    expect(res.body.message).toEqual('GET_ORDERPASS');
+    expect(res.body.has_preorder_pass).toBe(1);
   });
 
   test('INVALID_ORDERPASS: invalid orderpass', async () => {
       const res = await request(app)
-      .get(`/preorder-pass?preorderPassesId=12121212`)
+      .get(`/preorder-pass?preorderPassesId=222`)
       .set('Authorization', `Bearer ${accessToken}`);
       expect(res.status).toBe(400);
-      expect(res.body.message).toEqual('NOT_FOUND_ORDERPASS');
+      expect(res.body.message).toEqual('NOT_FOUND_ORDERPASSID');
+      // expect(res.body.has_preorder_pass).toBe(0);
   });
 });
+  
