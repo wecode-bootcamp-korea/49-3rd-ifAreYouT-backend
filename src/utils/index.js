@@ -133,4 +133,5 @@ module.exports = {
   useTransaction,
   isEmptyObject,
   isAllDataHasValue,
+  generateOrderNumber,
 };
