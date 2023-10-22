@@ -57,4 +57,16 @@ const getSeatsDataDao = async (eventId) => {
   return result;
 };
 
-module.exports = { getSeatsDataDao, isEventExistDao };
+const updateEventSeatDao = async (datas) => {
+  const seatIds = datas.map((data) => data.seatId);
+  await dataSource.query(
+    `UPDATE event_seats
+      SET status = 'disabled'
+      WHERE seat_id IN (?)
+    `,
+    [seatIds],
+  );
+  return 'seat updated';
+};
+
+module.exports = { getSeatsDataDao, isEventExistDao, updateEventSeatDao };
