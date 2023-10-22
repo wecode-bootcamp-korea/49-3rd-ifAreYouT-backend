@@ -58,3 +58,13 @@ exports.throwError = (code, message) => {
   error.status = code;
   throw error;
 };
+
+exports.asyncWrap = (asyncController) => {
+  return async (req, res, next) => {
+    try {
+      await asyncController(req, res);
+    } catch (error) {
+      next(error);
+    }
+  };
+};
