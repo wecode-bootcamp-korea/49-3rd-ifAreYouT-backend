@@ -82,6 +82,27 @@ const isAllDataHasValue = (data) => {
   }
 };
 
+const generateOrderNumber = () => {
+  function pad(number, length) {
+    let str = '' + number;
+    while (str.length < length) {
+      str = '0' + str;
+    }
+    return str;
+  }
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = pad(now.getMonth() + 1, 2);
+  const day = pad(now.getDate(), 2);
+  const hours = pad(now.getHours(), 2);
+  const minutes = pad(now.getMinutes(), 2);
+  const seconds = pad(now.getSeconds(), 2);
+  const milliseconds = pad(now.getMilliseconds(), 3);
+  const formattedTimestamp = `${year}${month}${day}${hours}${minutes}${seconds}${milliseconds}`;
+
+  return formattedTimestamp;
+};
+
 const useTransaction = async (dataSource, queries) => {
   const queryRunner = await dataSource.createQueryRunner();
   await queryRunner.connect();
