@@ -19,7 +19,7 @@ const extraInfoDao = async (phoneNumber, birthDay, userId) => {
     return extraInfo;
 }
 
-const createUser = async (kakaoId, nickname, email) => {
+const createUserDao = async (kakaoId, nickname, email) => {
     const newUserInfo = await dataSource.query(
         `
         INSERT INTO users (uid, nickname, email)
@@ -33,5 +33,5 @@ const createUser = async (kakaoId, nickname, email) => {
 module.exports = {
     findByKakaoId,
     extraInfoDao,
-    createUser
+    createUserDao
 }

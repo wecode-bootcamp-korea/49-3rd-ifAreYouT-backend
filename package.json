@@ -1,7 +1,6 @@
 {
   "name": "49-3rd-ifareyout-backend",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
     "test": "DOTENV_CONFIG_PATH=.env.test jest --setupFiles=dotenv/config",
@@ -32,9 +31,23 @@
     "morgan": "^1.10.0",
     "mysql2": "^3.6.1",
     "nodemailer": "^6.9.5",
+    "passport": "^0.6.0",
+    "passport-kakao": "^1.0.1",
     "supertest": "^6.3.3",
     "typeorm": "^0.3.17",
     "uuid": "^9.0.1",
     "uuid4": "^2.0.3"
-  }
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wecode-bootcamp-korea/49-3rd-ifAreYouT-backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wecode-bootcamp-korea/49-3rd-ifAreYouT-backend/issues"
+  },
+  "homepage": "https://github.com/wecode-bootcamp-korea/49-3rd-ifAreYouT-backend#readme",
+  "description": ""
 }

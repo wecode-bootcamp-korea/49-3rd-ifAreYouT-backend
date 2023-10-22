@@ -1,15 +1,15 @@
 const passport = require('passport');
 const KakaoStrategy = require('passport-kakao').Strategy;
 const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv')
+require("dotenv").config()
 
 
 const { userDao } = require('../models');
 const { throwError } = require('../utils');
-const { findByKakaoId, createUser } = userDao;
+const { findByKakaoId, createUserDao } = userDao;
 
 const generateToken = (userId) => {
-    return jwt.sign({ id: userId }, process.env.USERID);
+    return jwt.sign({ id: userId }, process.env.JWT_SECRET_);
 };
 
 passport.use('kakao', new KakaoStrategy({
@@ -37,7 +37,7 @@ passport.use('kakao', new KakaoStrategy({
                 if (!exUserData) {
                     return done(throwError(404, '유저 데이터 불러오기 실패'));
                 } else {
-                    const newUser = await createUser(kakaoId);
+                    const newUser = await createUserDao(kakaoId);
                     if (!newUser) {
                         return done(throwError(404, '가입 사용자 데이터 오류'));
                     }
