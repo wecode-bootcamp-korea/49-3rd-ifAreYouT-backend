@@ -1,9 +1,10 @@
 const express = require('express');
 //const paymentRouter = require('./payment.route');
-const promotionRouter = require('./promotion.route');
-const router = express.Router();
 
-const ticketRouter = require("./ticketRouter");
+const router = express.Router();
+const promotionRouter = require('./promotion.route');
+
+const ticketRouter = require('./ticketRouter');
 
 router.get('/', (req, res, next) => {
   res.send('OK');

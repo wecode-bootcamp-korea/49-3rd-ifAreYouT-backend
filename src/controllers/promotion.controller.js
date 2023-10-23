@@ -18,8 +18,10 @@ const getQuestionsByPromoId = async (req, res) => {
 };
 const putPreorderPass = async (req, res) => {
   try {
-    const ans = req.body;
-    console.log(ans);
+    const { promotionId } = req.params;
+    console.log('promoid', promotionId);
+    const { ans } = req.body;
+    console.log('ans', ans);
     const map = Object.values(ans);
     console.log(map);
     const data = await promotionService.putPreorderPass(promotionId, map);
