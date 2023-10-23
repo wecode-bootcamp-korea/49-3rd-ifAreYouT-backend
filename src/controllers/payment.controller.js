@@ -1,10 +1,10 @@
 const {paymentService} = require("../services");
 
-const showPaymentMethods = async (req, res) => {
+const putPaymentInfo = async (req, res) => {
   try {
-    const data = await paymentService.showMain();
+    const data = await paymentService.putPaymentInfo();
     res.status(201).json({
-      message: 'PAYMENT METHOD SELECTED',
+      message: 'PAYMENT INFO SUCCESS',
       data: data,
     });
   } catch (error) {
@@ -14,5 +14,5 @@ const showPaymentMethods = async (req, res) => {
 };
 
 module.exports = {
-  showPaymentMethods,
+  putPaymentInfo,
 };
