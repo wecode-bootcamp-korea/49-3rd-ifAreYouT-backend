@@ -14,7 +14,7 @@ CREATE TABLE `events` (
   `stage_id` integer NOT NULL,
   `category_id` integer NOT NULL,
   `performer_id` integer NOT NULL,
-  `promotion_id` integer NOT NULL,
+  `promotion_id` integer,
   FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
   FOREIGN KEY (`stage_id`) REFERENCES `stages` (`id`),
   FOREIGN KEY (`performer_id`) REFERENCES `performers` (`id`),
