@@ -1,7 +1,7 @@
 const { promotionDao } = require('../models');
 
-const showPaymentMethods = async () => {
-  const data = await productDao.showPaymentMethods();
+const putPaymentInfo = async () => {
+  const data = await paymentDao.putPaymentInfo();
   // if (!res) {
   //   const error = new Error("NO PRODUCT");
   //   error.status = 400;
@@ -13,5 +13,5 @@ const showPaymentMethods = async () => {
 };
 
 module.exports = {
-  showPaymentMethods,
+  putPaymentInfo,
 };

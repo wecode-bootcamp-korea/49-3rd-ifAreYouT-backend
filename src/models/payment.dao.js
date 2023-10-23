@@ -1,11 +1,13 @@
-const { myDataSource } = require('./dataSource');
+const { dataSource } = require('./dataSource');
 
-const showPaymentMethods = async () => {
+const putPaymentInfo = async () => {
   console.log('dao-showMain');
-  const data = await myDataSource.query(`select * from payment`);
+  //231023 
+  const data = await dataSource.query(`
+  select * from payment`);
   console.log(data);
   return data;
 };
 module.exports = {
-  showPaymentMethods,
+  putPaymentInfo,
 };

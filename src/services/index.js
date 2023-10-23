@@ -1,5 +1,6 @@
 const ticketService = require("./ticketService");
-
+const paymentService = require('./payment.service');
 module.exports = {
-    ticketService
-}
+  paymentService,
+  ticketService,
+};

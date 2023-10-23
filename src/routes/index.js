@@ -7,7 +7,7 @@ const router = express.Router();
 
 console.log('he');
 router.use('/payment', paymentRouter);
-router.use('/promotion', promotionRouter);
+//router.use('/promotion', promotionRouter);
 router.use('/tickets', ticketRouter);
 
 

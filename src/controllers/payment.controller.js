@@ -1,6 +1,9 @@
 const {paymentService} = require("../services");
+const { throwError } = require('../utils');
 
 const putPaymentInfo = async (req, res) => {
+  const userId = req.userData;
+  console.log('userid', userId);
   try {
     const data = await paymentService.putPaymentInfo();
     res.status(201).json({
