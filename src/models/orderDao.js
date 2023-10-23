@@ -108,11 +108,26 @@ const updateEventSeatDao = async (data, orderNumber) => {
       `INSERT INTO event_orders (order_number, ticket_code, time_id, seat_id, order_id) VALUES ${values}`,
     );
   };
-  useTransaction(dataSource, [
+  const result = useTransaction(dataSource, [
     updateEventSeatsQueryRunner,
     addOrderQueryRunner,
     addEventOrderByOrderNumberQueryRunner,
   ]);
+  return result;
+};
+
+const updateSeatStatusDao = async (seats, orderNumber) => {
+  // 주문삭제해야됨
+
+  const seatIds = seats.map((data) => data.seatId);
+  await dataSource.query(
+    `UPDATE event_seats
+      SET status = 'available'
+      WHERE seat_id IN (?)
+    `,
+    [seatIds],
+  );
+  return { message: 'seat updated' };
 };
 
 module.exports = {
@@ -120,4 +135,5 @@ module.exports = {
   isEventExistDao,
   updateEventSeatDao,
   isSeatReservableDao,
+  updateSeatStatusDao,
 };

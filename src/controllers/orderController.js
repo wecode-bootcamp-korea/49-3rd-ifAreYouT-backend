@@ -30,11 +30,9 @@ const updateEventSeatsController = async (req, res, next) => {
     const eventExist = await isEventExistService(eventId);
     if (isEmpty(eventExist)) throwError(400, 'no event data');
     if (!seats || !isAllDataHasValue(seats)) throwError(400, 'key error');
-    const message = await updateEventSeatService({ ...req.body, userId: 1 });
-    if (!message) throwError(400, 'seat update failed');
-    res.status(200).json({
-      message,
-    });
+    const result = await updateEventSeatService({ ...req.body, userId });
+    if (!result) throwError(400, 'seat update failed');
+    res.status(200).json(result);
   } catch (err) {
     console.error(err);
     next(err);

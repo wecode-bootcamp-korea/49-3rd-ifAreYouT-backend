@@ -1,3 +1,4 @@
+const { seatStatusQueue } = require('../queue');
 const { generateOrderNumber, throwError } = require('../utils');
 
 const {
@@ -14,9 +15,11 @@ const getSeatsDataService = (eventId) => {
   return getSeatsDataDao(eventId);
 };
 const updateEventSeatService = async (data) => {
+  const { seats } = data;
   const orderNumber = generateOrderNumber();
   const isSeatReservable = await isSeatReservableDao(data);
   if (!isSeatReservable) throwError(400, 'seat already reserved');
+  await seatStatusQueue.add({ seats }, { delay: 1000 * 60 * 1 });
   return updateEventSeatDao(data, orderNumber);
 };
 
