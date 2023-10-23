@@ -1,6 +1,5 @@
 const { ticketService } = require('../services');
 const { throwError } = require('../utils');
-const { v4: uuidv4 } = require('uuid');
 
 const getTicketInfoByUserId = async (req, res, next) => {
   const { userId } = req.query;
