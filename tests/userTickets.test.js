@@ -25,7 +25,7 @@ describe('user get ticket', () => {
     INSERT INTO seat_grades 
       (grade, price, stage_id) 
     VALUES 
-      (1, 1, 1)
+      (1, 200000, 1)
     `);
     await dataSource.query(`
     INSERT INTO categories
@@ -45,7 +45,7 @@ describe('user get ticket', () => {
       (title, playtime, description, status, start_date, end_date, sales_start_date, sales_end_date,
       stage_id, category_id, performer_id, promotion_id) 
     VALUES
-     ('testtitle', '2hour', 'test', 'merchantable', NOW(), NOW(), NOW(), NOW(), 1, 1, 1, 1)
+     ('아리아나 그란데 내한', '2hour', 'test', 'merchantable', NOW(), NOW(), NOW(), NOW(), 1, 1, 1, 1)
     `);
     await dataSource.query(`
     INSERT INTO times
@@ -91,17 +91,31 @@ describe('user get ticket', () => {
     await dataSource.destroy();
   });
 
-  test('GET_TICKETS: valid order', async () => {
-    await request(app)
+  test('GET_TICKETS: valid tickets', async () => {
+    const res = await request(app)
     .get(`/tickets?userId=1`)
     .set('Authorization', 
     `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJJZCI6MX0sImlhdCI6MTY5NzcxOTY0MiwiZXhwIjoxNzAwMzExNjQyfQ.zuVcbarIWTuPPBm7DvoaYRsKGFV8YJPK68fa2gztFeU`
     )
-    .expect('Content-Type', /json/)
-    .expect(200)
+    .expect(200);
+
+    expect(res.body).toEqual(
+      {
+        "message": "GET_TICKETS",
+        "data": [
+          {
+            "ticketCode": "testticketcode",
+            "eventName": "아리아나 그란데 내한",
+            "rowName": "test",
+            "colName": 123,
+            "ticketPrice": "200000"
+          }
+        ]
+      }
+    )
   });
 
-  test('INVALID_ORDER_ID: invalid order', async () => {
+  test('INVALID_TICKETS: invalid ticketsinfo', async () => {
     await request(app)
       .get(`/tickets`)
       .set('Authorization',
