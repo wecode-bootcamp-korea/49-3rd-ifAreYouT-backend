@@ -118,16 +118,30 @@ const updateEventSeatDao = async (data, orderNumber) => {
 
 const updateSeatStatusDao = async (seats, orderNumber) => {
   // 주문삭제해야됨
-
-  const seatIds = seats.map((data) => data.seatId);
-  await dataSource.query(
-    `UPDATE event_seats
+  const updateEventOrderQueryRunner = async (queryRunner) => {
+    await queryRunner.query(
+      `UPDATE orders
+      SET status = 'canceled'
+      WHERE order_no IN (?)
+    `,
+      [orderNumber],
+    );
+  };
+  const updateEventSeatsQueryRunner = async (queryRunner) => {
+    const seatIds = seats.map((data) => data.seatId);
+    await queryRunner.query(
+      `UPDATE event_seats
       SET status = 'available'
       WHERE seat_id IN (?)
     `,
-    [seatIds],
-  );
-  return { message: 'seat updated' };
+      [seatIds],
+    );
+    return { message: 'seat updated' };
+  };
+  useTransaction(dataSource, [
+    updateEventOrderQueryRunner,
+    updateEventSeatsQueryRunner,
+  ]);
 };
 
 module.exports = {
