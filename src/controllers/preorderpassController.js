@@ -17,7 +17,7 @@ const getUserPreorderPassByUserId = async (req, res, next) => {
         has_preorder_pass: 1,
      });
     } else {
-      res.status(200).json({
+      res.status(400).json({
         message: 'NOT_FOUND_ORDERPASS',
         has_preorder_pass: 0,
      });

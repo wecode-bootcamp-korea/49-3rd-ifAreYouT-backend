@@ -1,17 +1,13 @@
 const request = require('supertest');
 const { createApp } = require('../app');
 const { dataSource } = require('../src/models/dataSource');
-const jwt = require('jsonwebtoken');
 
-describe('user get ticket', () => {
+describe('user get preorderpass', () => {
   let app;
-  let accessToken;
-  let userId; 
 
   beforeAll(async () => {
     app = createApp();
     await dataSource.initialize();
-    await dataSource.query(`DELETE FROM event_reactions`);
     await dataSource.query(`
     INSERT INTO users 
       (id, email, nickname, phone_number, provider, uid)
@@ -50,17 +46,10 @@ describe('user get ticket', () => {
     VALUES
      ('testtitle', '2hour', 'test', 'merchantable', NOW(), NOW(), NOW(), NOW(), 1, 1, 1, 1)
     `);
-
-    const userResult = await dataSource.query('SELECT id FROM users WHERE email = ?', ['wecode13@gmil.com']);
-    userId = userResult[0].id;
-
-    accessToken = jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '30d' });
-    
   });
 
   afterAll(async () => {
     await dataSource.query(`SET foreign_key_checks = 0;`);
-    await dataSource.query(`DELETE FROM event_reactions`);
     await dataSource.query(`TRUNCATE users`);
     await dataSource.query(`TRUNCATE stages`);
     await dataSource.query(`TRUNCATE categories`);
@@ -74,20 +63,29 @@ describe('user get ticket', () => {
 
   test('GET_orderpass: valid orderpass', async () => {
     const res = await request(app)
-    .get(`/preorder-pass`)
-    .set('Authorization', `Bearer ${accessToken}`);
-    expect(res.status).toBe(200);
-    expect(res.body.message).toEqual('GET_ORDERPASS');
-    expect(res.body.has_preorder_pass).toBe(1);
+    .get(`/preorder-pass?userId=1&preorderPassesId=1`)
+    .set('Authorization', 
+    `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJJZCI6MX0sImlhdCI6MTY5NzcxOTY0MiwiZXhwIjoxNzAwMzExNjQyfQ.zuVcbarIWTuPPBm7DvoaYRsKGFV8YJPK68fa2gztFeU`
+    )
+    .expect(200);
+
+    expect(res.body).toEqual(
+      {
+        "message": "FOUND_ORDERPASS",
+        "has_preorder_pass": 1
+    }
+    )
   });
 
   test('INVALID_ORDERPASS: invalid orderpass', async () => {
-      const res = await request(app)
-      .get(`/preorder-pass?preorderPassesId=222`)
-      .set('Authorization', `Bearer ${accessToken}`);
-      expect(res.status).toBe(400);
-      expect(res.body.message).toEqual('NOT_FOUND_ORDERPASSID');
-      // expect(res.body.has_preorder_pass).toBe(0);
+    await request(app)
+      .get(`/preorder-pass`)
+      .set('Authorization',
+      `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJJZCI6MX0sImlhdCI6MTY5NzcxOTY0MiwiZXhwIjoxNzAwMzExNjQyfQ.zuVcbarIWTuPPBm7DvoaYRsKGFV8YJPK68fa2gztFeU`
+      )
+      .expect('Content-Type', /json/)
+      .expect(400)
+       expect({ error: 'NO_DATA_ORDERPASS' });
   });
 });
   
