@@ -25,9 +25,13 @@ const viewEvent = async (userId, id) => {
   return dataA;
 };
 
-const viewBySearch = async (keyword) => {
+const viewBySearch = async (keyword, offset, page, size) => {
+  if (page < 1) {
+    throwError(400, 'Non available page');
+  }
+  const pageQuery = await queryBuilder.page(offset, size);
   const dataA = await eventDao.totalCountBySearch(keyword);
-  const dataB = await eventDao.viewBySearch(keyword);
+  const dataB = await eventDao.viewBySearch(keyword, pageQuery);
   dataA[0].list = dataB;
   return dataA;
 };

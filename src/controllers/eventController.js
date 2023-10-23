@@ -16,8 +16,9 @@ const viewEvent = async (req, res) => {
 };
 
 const viewBySearch = async (req, res) => {
-  const { keyword } = req.query;
-  const result = await eventService.viewBySearch(keyword);
+  const { keyword, page, size } = req.query;
+  const offset = size * (page - 1);
+  const result = await eventService.viewBySearch(keyword, offset, page, size);
   res.status(200).json({ data: result[0] });
 };
 // 리엑션은 한번 하면 수정안됨 삭제안됨 중복안됨
@@ -34,7 +35,7 @@ const viewMain = async (req, res) => {
   res.status(200).json({ data: result });
 };
 
-const checkAccess = async (req, res, next) => {
+const checkAccess = async (req, res) => {
   const userId = req.userData;
   const eventId = req.params.id;
   await eventService.checkAccess(userId, eventId);

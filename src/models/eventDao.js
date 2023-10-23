@@ -7,7 +7,7 @@ const totalCountBySearch = async (keyword) => {
   return await dataSource.query(query);
 };
 
-const viewBySearch = async (keyword) => {
+const viewBySearch = async (keyword, pageQuery) => {
   let query = `
     SELECT
     categories.category_name as category,
@@ -28,6 +28,8 @@ const viewBySearch = async (keyword) => {
     LEFT JOIN
     event_images on events.id = event_images.event_id
     WHERE events.title LIKE '%${keyword}%'
+    ${pageQuery}
+
     `;
   return await dataSource.query(query);
 };
