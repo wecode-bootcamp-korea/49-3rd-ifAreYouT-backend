@@ -18,14 +18,14 @@ const viewBySearch = async (keyword) => {
     DATE_FORMAT(events.end_date, '%Y.%m.%d') AS endDate,
     TIME_FORMAT(times.event_time, '%h:%i') as eventTime,
     event_images.thumbnail_image_url as thumbnailImage
-    from events
-    left join
+    FROM events
+    LEFT JOIN
     categories on events.category_id = categories.id
-    left join
+    LEFT JOIN
     stages on events.stage_id = stages.id
-    left join
+    LEFT JOIN
     times on events.id = times.event_id
-    left join
+    LEFT JOIN
     event_images on events.id = event_images.event_id
     WHERE events.title LIKE '%${keyword}%'
     `;
@@ -76,7 +76,8 @@ const viewByCategory = async (category, orderByQuery, pageQuery) => {
     events ON event_seats.event_id = events.id
     WHERE event_seats.status = 'disabled'
     GROUP BY event_seats.event_id
-    ) reserved_seats ON reserved_seats.event_id = events.id    
+    ) 
+    reserved_seats ON reserved_seats.event_id = events.id    
     WHERE categories.category_name = '${category}'
     AND event_reactions.reaction_type = 'exited'
     GROUP BY category, id, title, stage, startDate, endDate, eventTime, thumbnailImage, reserved
@@ -149,7 +150,7 @@ const reactions = async (id) => {
     SUM(CASE WHEN event_reactions.reaction_type = 'unexited' THEN 1 ELSE 0 END) AS down
     FROM events
     LEFT JOIN event_reactions ON events.id = event_reactions.event_id
-    where events.id = ${id}
+    WHERE events.id = ${id}
     `;
   return await dataSource.query(query);
 };
