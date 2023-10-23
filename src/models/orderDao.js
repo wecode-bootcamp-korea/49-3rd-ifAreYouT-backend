@@ -143,11 +143,21 @@ const updateSeatStatusDao = async (seats, orderNumber) => {
     updateEventSeatsQueryRunner,
   ]);
 };
-
+const getOrderNumberBySeatIdDao = async (seats) => {
+  const orderNumber = await dataSource.query(
+    `
+  SELECT order_number FROM event_orders WHERE seat_id IN (?)
+  `,
+    [seats.map((data) => data.seatId)],
+  );
+  console.log(orderNumber);
+  return orderNumber;
+};
 module.exports = {
   getSeatsDataDao,
   isEventExistDao,
   updateEventSeatDao,
   isSeatReservableDao,
   updateSeatStatusDao,
+  getOrderNumberBySeatIdDao,
 };

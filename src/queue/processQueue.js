@@ -1,6 +1,8 @@
-const { updateSeatStatusDao } = require('../models').orderDao;
+const { updateSeatStatusDao, getOrderNumberBySeatIdDao } =
+  require('../models').orderDao;
 
 module.exports = async (job) => {
   const { seats } = job.data;
-  await updateSeatStatusDao(seats);
+  const orderNumber = await getOrderNumberBySeatIdDao(seats);
+  await updateSeatStatusDao(seats, orderNumber[0].order_number);
 };
