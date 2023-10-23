@@ -1,22 +1,6 @@
 const { dataSource } = require('./dataSource');
 
-const findByUserId = async (userId) => {
-  const user = await dataSource.query(
-    `
-    SELECT
-        id
-    FROM
-        users
-    WHERE
-        id = ?
-    `,
-    [userId],
-  );
-
-  return user[0];
-};
-
-const createUserinfo = async (email, birthDate, nickname, phoneNumber, provider, uid) => {
+const createUserinfo = async (email, nickname, phoneNumber, provider, uid) => {
   const adduser = await dataSource.query(
     `
     INSERT INTO users (
@@ -26,9 +10,9 @@ const createUserinfo = async (email, birthDate, nickname, phoneNumber, provider,
         phone_number,
         provider,
         uid
-    ) VALUES (?, ?, ?, ?, ?, ?);
+    ) VALUES (?, null, ?, ?, ?, ?);
     `,
-    [email, birthDate, nickname, phoneNumber, provider, uid]
+    [email, nickname, phoneNumber, provider, uid]
   );
   return adduser;
 };
@@ -50,7 +34,6 @@ const updateUserinfo = async (email, birthDate, nickname, phoneNumber, userId) =
 };
 
 module.exports = {
-  findByUserId,
   createUserinfo,
   updateUserinfo,
 };

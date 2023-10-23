@@ -2,12 +2,9 @@ const { userService } = require('../services');
 const { throwError } = require('../utils');
 const { v4: uuidv4 } = require('uuid');
 
-const createUserController = async (req, res, next) => {
-//   const uid = req.body.uid;
-  const provider = req.body.provider;
-//   const provider = 'kakao';
+const addCreateUser = async (req, res, next) => {
   const uid = uuidv4();
-  const { email, birthDate, nickname, phoneNumber } = req.body;
+  const { email, nickname, phoneNumber, provider } = req.body;
 
   if (!email || !nickname || !phoneNumber || !provider) {
     throwError(400, 'KEY_ERROR');
@@ -15,7 +12,6 @@ const createUserController = async (req, res, next) => {
   try {
     await userService.createUser(
       email,
-      birthDate,
       nickname,
       phoneNumber,
       provider,
@@ -27,8 +23,7 @@ const createUserController = async (req, res, next) => {
         email: email,
         nickname: nickname,
         phoneNumber: phoneNumber,
-        provider: provider,
-        uid: uid
+        provider: provider
     },
     });
   } catch (error) {
@@ -36,7 +31,7 @@ const createUserController = async (req, res, next) => {
   }
 };
 
-const updateUserController = async (req, res, next) => {
+const updateUser = async (req, res, next) => {
   const { userId } = req.query;
   const { email, birthDate, nickname, phoneNumber } = req.body;
   if (!email || !nickname || !phoneNumber) {
@@ -65,6 +60,6 @@ const updateUserController = async (req, res, next) => {
 };
 
 module.exports = {
-  createUserController,
-  updateUserController,
+  addCreateUser,
+  updateUser,
 };
