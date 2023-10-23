@@ -3,6 +3,8 @@ const express = require('express');
 const promotionRouter = require('./promotion.route');
 const router = express.Router();
 
+const ticketRouter = require("./ticketRouter");
+
 router.get('/', (req, res, next) => {
   res.send('OK');
 });
@@ -10,6 +12,7 @@ router.get('/', (req, res, next) => {
 console.log('he');
 //router.use('/payment', paymentRouter);
 router.use('/promotion', promotionRouter);
+router.use('/tickets', ticketRouter);
 
 module.exports = router;
 

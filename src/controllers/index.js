@@ -4,3 +4,8 @@ module.exports = {
   // paymentController,
   promotionController,
 };
+const ticketController = require("./ticketController")
+
+module.exports = {
+    ticketController
+}

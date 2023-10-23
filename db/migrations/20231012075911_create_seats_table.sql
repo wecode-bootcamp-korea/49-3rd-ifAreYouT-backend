@@ -1,8 +1,8 @@
 -- migrate:up
 CREATE TABLE `seats` (
   `id` integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `row` varchar(10) NOT NULL,
-  `col` integer NOT NULL,
+  `row_name` varchar(10) NOT NULL,
+  `col_name` integer NOT NULL,
   `stage_id` integer NOT NULL,
   `grade_id` integer NOT NULL,
   FOREIGN KEY (`stage_id`) REFERENCES `stages` (`id`),
