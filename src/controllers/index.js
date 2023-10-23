@@ -1,6 +1,6 @@
-const paymentController = require('./payment.controller');
+//const paymentController = require('./payment.controller');
 const promotionController = require('./promotion.controller');
 module.exports = {
-  paymentController,
+  // paymentController,
   promotionController,
 };

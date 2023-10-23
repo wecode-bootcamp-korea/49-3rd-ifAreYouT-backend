@@ -1,17 +1,18 @@
-const {promotionDao} = require("../models");
+const { promotionDao } = require('../models');
 
-const showPromotion = async (promotionId) => {
-  const data = await promotionDao.showPromotion(promotionId);
+const getQuestionsByPromoId = async (promotionId) => {
+  const data = await promotionDao.getQuestionsByPromoId(promotionId);
   console.log('service-showPromoQ');
+  //프로모션아이디가 없을 때 예외처리
   return data;
 };
-const isPreorderPass = async (eventId, performerId) => {
-  const data = await promotionDao.isPreorderPass(eventId, performerId);
+const putPreorderPass = async (map) => {
+  const data = await promotionDao.putPreorderPass(map);
   console.log('service-showPromoQ');
   return data;
 };
 
 module.exports = {
-  showPromotion,
-  isPreorderPass,
+  getQuestionsByPromoId,
+  putPreorderPass,
 };

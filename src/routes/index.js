@@ -1,5 +1,5 @@
 const express = require('express');
-const paymentRouter = require('./payment.route');
+//const paymentRouter = require('./payment.route');
 const promotionRouter = require('./promotion.route');
 const router = express.Router();
 
@@ -8,7 +8,7 @@ router.get('/', (req, res, next) => {
 });
 
 console.log('he');
-router.use('/payment', paymentRouter);
+//router.use('/payment', paymentRouter);
 router.use('/promotion', promotionRouter);
 
 module.exports = router;

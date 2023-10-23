@@ -1,11 +1,12 @@
 const { promotionService } = require('../services');
 
-const showPromotion = async (req, res) => {
+const getQuestionsByPromoId = async (req, res) => {
   try {
     //const userId = req.userId;
-    const { promotionId } = req.body;
-    console.log(promotionId);
-    const data = await promotionService.showPromotion(promotionId);
+    const { promotionId } = req.params;
+    // const { promotionId } = req.params.promotionId; //get메소드는 body 실을수없음 231
+    console.log('hi', promotionId);
+    const data = await promotionService.getQuestionsByPromoId(promotionId);
     res.status(201).json({
       message: 'QUESTIONS SELECTED',
       data: data,
@@ -15,16 +16,13 @@ const showPromotion = async (req, res) => {
     res.status(error.status).json({ message: error.message });
   }
 };
-const isPreorderPass = async (req, res) => {
+const putPreorderPass = async (req, res) => {
   try {
-    const { ans1, ans2, ans3, ans4, ans5 } = req.body;
-    const data = await promotionService.isPreorderPass(
-      ans1,
-      ans2,
-      ans3,
-      ans4,
-      ans5,
-    );
+    const ans = req.body;
+    console.log(ans);
+    const map = Object.values(ans);
+    console.log(map);
+    const data = await promotionService.putPreorderPass(promotionId, map);
     res.status(201).json({
       //231018 메세지 빌더 방법이 없을까
       message: 'PREORDERPASS Y/N',
@@ -36,6 +34,6 @@ const isPreorderPass = async (req, res) => {
   }
 };
 module.exports = {
-  showPromotion,
-  isPreorderPass,
+  getQuestionsByPromoId,
+  putPreorderPass,
 };
