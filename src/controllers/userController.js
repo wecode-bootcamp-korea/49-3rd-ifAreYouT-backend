@@ -4,12 +4,12 @@ const { v4: uuidv4 } = require('uuid');
 
 const addCreateUser = async (req, res, next) => {
   const uid = uuidv4();
+  try {
   const { email, nickname, phoneNumber, provider } = req.body;
 
   if (!email || !nickname || !phoneNumber || !provider) {
     throwError(400, 'KEY_ERROR');
   }
-  try {
     await userService.createUser(
       email,
       nickname,
@@ -27,17 +27,18 @@ const addCreateUser = async (req, res, next) => {
     },
     });
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
 
 const updateUser = async (req, res, next) => {
   const { userId } = req.query;
+  try {
   const { email, birthDate, nickname, phoneNumber } = req.body;
   if (!email || !nickname || !phoneNumber) {
     throwError(400, 'KEY_ERROR');
   }
-  try {
     await userService.updateUser(
       email,
       birthDate,
@@ -55,6 +56,7 @@ const updateUser = async (req, res, next) => {
     } 
     });
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
