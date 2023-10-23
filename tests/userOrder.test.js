@@ -1,17 +1,13 @@
 const request = require('supertest');
 const { createApp } = require('../app');
 const { dataSource } = require('../src/models/dataSource');
-const jwt = require('jsonwebtoken');
 
 describe('user get order', () => {
   let app;
-  let userId;
-  let accessToken;
 
   beforeAll(async () => {
     app = createApp();
     await dataSource.initialize();
-    await dataSource.query(`DELETE FROM event_reactions`);
     await dataSource.query(`
     INSERT INTO users 
       (email, nickname, phone_number, provider, uid)
@@ -61,13 +57,12 @@ describe('user get order', () => {
       (1, 1, 1, 1, 10.50, 'pending');
     `);
     await dataSource.query(`INSERT INTO promotions (id) VALUES (1);`)
-    await dataSource.query(`DELETE FROM events`);
     await dataSource.query(`
     INSERT INTO events 
-      (id, title, playtime, description, status, start_date, end_date, sales_start_date, sales_end_date,
+      (title, playtime, description, status, start_date, end_date, sales_start_date, sales_end_date,
       stage_id, category_id, performer_id, promotion_id) 
     VALUES 
-      (1, 'testtitle', '2hour', 'test', 'merchantable', NOW(), NOW(), NOW(), NOW(), 1, 1, 1, 1);
+      ('testtitle', '2hour', 'test', 'merchantable', NOW(), NOW(), NOW(), NOW(), 1, 1, 1, 1);
     `);
     await dataSource.query(`INSERT INTO times 
       (id, event_time, event_day, event_id) 
@@ -86,15 +81,10 @@ describe('user get order', () => {
       (2, 1, 1, 1, 'testordername', 'testticketcode');
     `);
 
-    const userResult = await dataSource.query('SELECT * FROM users WHERE email = ?', ['wecode13@gmil.com']);
-
-    userId = userResult[0].id;
-    accessToken = jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '30d' });
   });
 
   afterAll(async () => {
     await dataSource.query(`SET foreign_key_checks = 0;`);
-    await dataSource.query(`DELETE FROM event_reactions`);
     await dataSource.query(`TRUNCATE users`);
     await dataSource.query(`TRUNCATE payments`);
     await dataSource.query(`TRUNCATE payment_methods`);
@@ -114,21 +104,42 @@ describe('user get order', () => {
 
   test('GET_ORDER: valid orders', async () => {
     const res = await request(app)
-    .get(`/orders`)
-    .set('Authorization', `Bearer ${accessToken}`);
-    expect(res.status).toBe(200);
-    expect(res.body.message).toEqual('GET_ORDER');
+    .get(`/orders/details?userId=1`)
+    .set('Authorization', 
+    `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJJZCI6MX0sImlhdCI6MTY5NzcxOTY0MiwiZXhwIjoxNzAwMzExNjQyfQ.zuVcbarIWTuPPBm7DvoaYRsKGFV8YJPK68fa2gztFeU`
+    )
+    .expect(200);
+
+    expect(res.body).toEqual(
+      {
+        "message": "GET_ORDER",
+        "data": [
+          {
+            "order_id": 1,
+            "orderNo": "123",
+            "orderStatus": "pending",
+            "eventName": "testtitle",
+            "eventTime": "00:00:03",
+            "seat": "test123",
+            "ticketPrice": "1",
+            "categoryName": "testcategoryname",
+            "performerName": "testname",
+            "paymentMethod": "testmethod",
+            "paymentAmount": 10.5
+          }
+        ]
+      }
+    )
   });
 
   test('INVALID_ORDER: invalid order', async () => {
-    try {
-      const res = await request(app)
-      .get(`/orders`)
-      .set('Authorization', `Bearer ${accessToken}`);
-      expect(res.status).toBe(400);
-      expect(res.body.message).toEqual('PURCHASE_HISTORY_NOT_FOUND');
-    } catch (error) {
-     console.log(error);
-    }
+    await request(app)
+      .get(`/orders/details`)
+      .set('Authorization',
+      `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJJZCI6MX0sImlhdCI6MTY5NzcxOTY0MiwiZXhwIjoxNzAwMzExNjQyfQ.zuVcbarIWTuPPBm7DvoaYRsKGFV8YJPK68fa2gztFeU`
+      )
+      .expect('Content-Type', /json/)
+      .expect(400)
+       expect({ error: 'PURCHASE_HISTORY_NOT_FOUND' });
   });
 });
