@@ -1,6 +1,6 @@
 -- migrate:up
 CREATE TABLE `seats` (
-  `id` integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
   `row_name` varchar(10) NOT NULL,
   `col_name` integer NOT NULL,
   `stage_id` integer NOT NULL,
