@@ -117,11 +117,10 @@ const updateEventSeatDao = async (data, orderNumber) => {
 };
 
 const updateSeatStatusDao = async (seats, orderNumber) => {
-  // 주문삭제해야됨
   const updateEventOrderQueryRunner = async (queryRunner) => {
     await queryRunner.query(
       `UPDATE orders
-      SET status = 'canceled'
+      SET order_status = 'canceled'
       WHERE order_no IN (?)
     `,
       [orderNumber],
