@@ -1,6 +1,5 @@
 const { preorderpassService } = require('../services');
 const { throwError } = require('../utils');
-const { v4: uuidv4 } = require('uuid');
 
 const getUserPreorderPassByUserId = async (req, res, next) => {
   const { userId } = req.query;
