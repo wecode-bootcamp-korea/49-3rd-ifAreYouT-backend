@@ -1,3 +1,4 @@
 const eventController = require('./eventController');
+const ticketController = require('./ticketController');
 
-module.exports = { eventController };
+module.exports = { eventController, ticketController };
