@@ -149,7 +149,6 @@ const getOrderNumberBySeatIdDao = async (seats) => {
   `,
     [seats.map((data) => data.seatId)],
   );
-  console.log(orderNumber);
   return orderNumber;
 };
 module.exports = {
