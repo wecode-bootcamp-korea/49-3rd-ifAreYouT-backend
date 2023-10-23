@@ -19,7 +19,7 @@ const updateEventSeatService = async (data) => {
   const orderNumber = generateOrderNumber();
   const isSeatReservable = await isSeatReservableDao(data);
   if (!isSeatReservable) throwError(400, 'seat already reserved');
-  await seatStatusQueue.add({ seats, orderNumber }, { delay: 1000 * 60 * 1 });
+  await seatStatusQueue.add({ seats, orderNumber }, { delay: 1000 * 60 * 10 });
   return updateEventSeatDao(data, orderNumber);
 };
 
