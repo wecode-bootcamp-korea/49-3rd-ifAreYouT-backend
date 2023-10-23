@@ -1,6 +1,6 @@
 -- migrate:up
 CREATE TABLE `orders` (
-  `id` integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
   `user_id` integer NOT NULL,
   `order_no` varchar(20) NOT NULL,
   `order_status` enum('pending', 'purchased', 'canceled') NOT NULL,
