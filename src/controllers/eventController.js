@@ -4,8 +4,12 @@ const { v4: uuidv4 } = require('uuid');
 
 const getLikedEventsByUser = async (req, res, next) => {
   const { userId } = req.query;
-  const reactionType = req.query['reaction-type'] || 'exited';
-  try {
+  const reactionType = req.query['reaction-type'] || 'exited' || 'unexited';
+  try { 
+    if (reactionType === 'unexited') {
+      throwError(400, 'UNEXITED_EVENTS')
+    }
+
     const likesInfo = await eventService.getLikedEvents(userId, reactionType);
 
     if (!likesInfo || likesInfo.length === 0) {
