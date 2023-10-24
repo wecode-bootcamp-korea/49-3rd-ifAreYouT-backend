@@ -1,6 +1,5 @@
 const { orderService } = require('../services');
 const { throwError } = require('../utils');
-const { v4: uuidv4 } = require('uuid');
 
 const getUserOrder = async (req, res, next) => {
   const { userId } = req.query;
