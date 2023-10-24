@@ -67,9 +67,9 @@ describe('user get ticket', () => {
     `);
     await dataSource.query(`
     INSERT INTO event_orders
-     (id, time_id, seat_id, order_id, order_name, ticket_code)
+     (id, time_id, seat_id, order_id, ticket_code)
     VALUES
-     (1, 1, 1, 1, 'testordername', 'testticketcode')
+     (1, 1, 1, 1, 'testticketcode')
     `);
     
   });
