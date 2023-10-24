@@ -1,7 +1,17 @@
-const { promotionDao } = require('../models');
+const { paymentDao } = require('../models');
 
-const putPaymentInfo = async () => {
-  const data = await paymentDao.putPaymentInfo();
+const putPaymentInfo = async (
+  userId,
+  amount,
+
+  orderNumber,
+) => {
+  const data = await paymentDao.putPaymentInfo(
+    userId,
+    amount,
+
+    orderNumber,
+  );
   // if (!res) {
   //   const error = new Error("NO PRODUCT");
   //   error.status = 400;

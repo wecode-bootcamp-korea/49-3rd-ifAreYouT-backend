@@ -24,6 +24,7 @@ exports.generateToken = (data) => {
  * @returns decode 된 토큰
  */
 exports.verifyToken = (token) => {
+  console.log(token);
   return jwt.verify(token.replace('Bearer ', ''), process.env.JWT_SECRET);
 };
 

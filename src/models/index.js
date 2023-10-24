@@ -1,3 +1,4 @@
-const ticketDao = require("./ticketDao");
+const paymentDao = require('./payment.dao');
+const ticketDao = require('./ticketDao');
 
-module.exports = { ticketDao }
+module.exports = { paymentDao, ticketDao };
