@@ -16,7 +16,7 @@ const getTicketInfoByUserId = async (userId) => {
    JOIN seats s ON eo.seat_id = s.id
    JOIN seat_grades sg ON s.grade_id = sg.id
    WHERE o.user_id = ?;`,
-  [userId],
+    [userId],
   );
   return user;
 };

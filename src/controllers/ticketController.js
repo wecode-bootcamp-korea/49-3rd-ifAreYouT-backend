@@ -2,7 +2,7 @@ const { ticketService } = require('../services');
 const { throwError } = require('../utils');
 
 const getTicketInfoByUserId = async (req, res, next) => {
-  const { userId } = req.query;
+  const { userId } = req.userData;
   try {
     const ticketInfo = await ticketService.getTicketInfo(userId);
 
