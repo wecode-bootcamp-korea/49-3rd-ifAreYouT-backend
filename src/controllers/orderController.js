@@ -2,7 +2,7 @@ const { orderService } = require('../services');
 const { throwError } = require('../utils');
 
 const getUserOrder = async (req, res, next) => {
-  const { userId } = req.query;
+  const { userId } = req.userData;
   try {
     const orderInfo = await orderService.getOrderByUserId(userId);
 
