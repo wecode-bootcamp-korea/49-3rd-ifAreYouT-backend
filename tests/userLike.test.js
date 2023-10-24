@@ -55,6 +55,17 @@ describe('get events with reaction by user', () => {
        expect({ error: 'LIKED_EVENTS_NOT_FOUND' });
   });
 
+  test('UNLIKES: event unlikes', async () => {
+    await request(app)
+      .get(`/events/likes?userId=3&reactionType=unexited`)
+      .set('Authorization',
+      `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJJZCI6MX0sImlhdCI6MTY5NzcxOTY0MiwiZXhwIjoxNzAwMzExNjQyfQ.zuVcbarIWTuPPBm7DvoaYRsKGFV8YJPK68fa2gztFeU`
+      )
+      .expect('Content-Type', /json/)
+      .expect(400)
+       expect({ error: 'EVENT_UNEXITED' });
+  });
+
   test('GET_likes: user likes', async () => {
     const res = await request(app)
     .get(`/events/likes?userId=1&reactionType=exited`)
