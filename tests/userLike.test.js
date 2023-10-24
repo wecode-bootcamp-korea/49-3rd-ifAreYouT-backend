@@ -30,12 +30,6 @@ describe('get events with reaction by user', () => {
       INSERT INTO event_reactions (id, reaction_type, event_id, user_id)
       VALUES (1, 'exited', 1, 1);
     `);
-    await dataSource.query(`
-    INSERT INTO event_images 
-      (id, event_id, detail_image_url, thumbnail_image_url) 
-    VALUES 
-      (1, 1, 'http://example.com/detail_image.jpg', 'http://example.com/thumbnail_image.jpg');
-    `)
   });
 
   afterAll(async () => {
@@ -45,7 +39,6 @@ describe('get events with reaction by user', () => {
     await dataSource.query(`TRUNCATE performers`);
     await dataSource.query(`TRUNCATE events`);
     await dataSource.query(`TRUNCATE event_reactions`);
-    await dataSource.query(`TRUNCATE event_images`);
     await dataSource.query(`TRUNCATE promotions`);
     await dataSource.query(`SET foreign_key_checks = 1;`);
     await dataSource.destroy();
@@ -77,8 +70,7 @@ describe('get events with reaction by user', () => {
                 "eventName": "아리아나 그란데 내한",
                 "eventDate": "2023-07-31T15:00:00.000Z",
                 "performer": "ariana grande",
-                "category": "콘서트",
-                "image_url": "http://example.com/thumbnail_image.jpg"
+                "category": "콘서트"
             }
         ],
         "message": "LIKED_EVENTS_FOUND"

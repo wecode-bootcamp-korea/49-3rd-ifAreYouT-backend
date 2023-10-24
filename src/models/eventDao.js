@@ -7,8 +7,7 @@ const getLikedEventsByUserId = async (userId, reactionType) => {
     e.title AS eventName,
     e.start_date AS eventDate,
     p.name AS performer,
-    c.category_name AS category,
-    ei.thumbnail_image_url AS image_url
+    c.category_name AS category
   FROM events AS e
   JOIN event_reactions AS er ON e.id = er.event_id
   JOIN performers AS p ON e.performer_id = p.id
