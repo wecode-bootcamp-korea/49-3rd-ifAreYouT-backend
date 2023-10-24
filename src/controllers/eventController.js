@@ -2,7 +2,7 @@ const { eventService } = require('../services');
 const { throwError } = require('../utils');
 
 const getLikedEventsByUser = async (req, res, next) => {
-  const { userId } = req.query;
+  const { userId } = req.userData;
   const { reactionType } = req.query;
   try {
     const likesInfo = await eventService.getLikedEvents(userId, reactionType);
