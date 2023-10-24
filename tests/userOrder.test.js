@@ -76,9 +76,9 @@ describe('user get order', () => {
     `);
     await dataSource.query(`
     INSERT INTO event_orders 
-      (id, time_id, seat_id, order_id, order_name, ticket_code)
+      (id, time_id, seat_id, order_id, ticket_code)
     VALUES 
-      (2, 1, 1, 1, 'testordername', 'testticketcode');
+      (2, 1, 1, 1, 'testticketcode');
     `);
 
   });
@@ -118,12 +118,12 @@ describe('user get order', () => {
             "order_id": 1,
             "orderNo": "123",
             "orderStatus": "pending",
-            "eventName": "testtitle",
+            "eventName": "아리아나 그란데 내한",
             "eventTime": "00:00:03",
             "seat": "test123",
-            "ticketPrice": "1",
-            "categoryName": "testcategoryname",
-            "performerName": "testname",
+            "ticketPrice": "200000",
+            "categoryName": "콘서트",
+            "performerName": "ariana grande",
             "paymentMethod": "testmethod",
             "paymentAmount": 10.5
           }
