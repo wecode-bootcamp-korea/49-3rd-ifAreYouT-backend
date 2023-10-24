@@ -2,7 +2,7 @@ const { preorderpassService } = require('../services');
 const { throwError } = require('../utils');
 
 const getUserPreorderPassByUserId = async (req, res, next) => {
-  const { userId } = req.query;
+  const { userId } = req.userData;
   const { preorderPassesId } = req.query;
   try {
     const hasPreorderPass = await preorderpassService.getUserOrderPassByUserId(userId, preorderPassesId);
