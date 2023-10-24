@@ -15,7 +15,7 @@ const addCreateUser = async (req, res, next) => {
       nickname,
       phoneNumber,
       provider,
-      uid,
+      uid
     );
     return res.status(200).json({
       message: 'SUCCESS',
@@ -33,7 +33,7 @@ const addCreateUser = async (req, res, next) => {
 };
 
 const updateUser = async (req, res, next) => {
-  const { userId } = req.query;
+  const { userId } = req.userData;
   try {
   const { email, birthDate, nickname, phoneNumber } = req.body;
   if (!email || !nickname || !phoneNumber) {
