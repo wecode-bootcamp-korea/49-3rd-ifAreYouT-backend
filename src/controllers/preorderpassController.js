@@ -5,7 +5,7 @@ const getUserPreorderPassByUserId = async (req, res, next) => {
   const { userId } = req.userData;
   try {
     const hasPreorderPass = await preorderpassService.getUserOrderPassByUserId(userId);
-
+    
     if (!hasPreorderPass.length) {
       throwError(400, 'NOT_FOUND_ORDERPASS');
     }
