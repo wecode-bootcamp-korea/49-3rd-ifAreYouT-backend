@@ -3,7 +3,6 @@ const express = require('express');
 
 const router = express.Router();
 const promotionRouter = require('./promotion.route');
-
 const ticketRouter = require('./ticketRouter');
 
 router.get('/', (req, res, next) => {

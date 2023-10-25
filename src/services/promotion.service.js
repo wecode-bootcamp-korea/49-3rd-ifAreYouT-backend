@@ -6,8 +6,13 @@ const getQuestionsByPromoId = async (promotionId) => {
   //프로모션아이디가 없을 때 예외처리
   return data;
 };
-const putPreorderPass = async (map) => {
-  const data = await promotionDao.putPreorderPass(map);
+const putPreorderPass = async (userId, eventId, promotionId, ans) => {
+  const data = await promotionDao.putPreorderPass(
+    eventId,
+    promotionId,
+    userId,
+    ans,
+  );
   console.log('service-showPromoQ');
   return data;
 };
