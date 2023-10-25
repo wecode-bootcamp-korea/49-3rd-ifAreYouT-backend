@@ -1,5 +1,4 @@
 const { dataSource } = require('./dataSource');
-const { useTransaction } = require('../utils');
 
 const isEventExistDao = async (eventId) => {
   const [eventExist] = await dataSource.query(
@@ -11,9 +10,8 @@ const isEventExistDao = async (eventId) => {
   return eventExist;
 };
 const getSeatsDataDao = async (eventId) => {
-  const getSeatsQuery = async (queryRunner) => {
-    const seats = await queryRunner.query(
-      `
+  const seats = await dataSource.query(
+    `
       SELECT
       s.id,
       CONCAT(s.row_name, '-', s.col_name) AS name,
@@ -29,13 +27,10 @@ const getSeatsDataDao = async (eventId) => {
       WHERE 
         events.id = ?
       `,
-      [eventId],
-    );
-    return { seats };
-  };
-  const getDetailsQuery = async (queryRunner) => {
-    const detail = await queryRunner.query(
-      `
+    [eventId],
+  );
+  const detail = await dataSource.query(
+    `
       SELECT
         seat_grades.grade,        
         seat_grades.price
@@ -46,15 +41,15 @@ const getSeatsDataDao = async (eventId) => {
       WHERE 
         events.id = ?        
       `,
-      [eventId],
-    );
-    return { detail };
+    [eventId],
+  );
+  return {
+    seats,
+    detail,
   };
-  const result = await useTransaction(dataSource, [
-    getSeatsQuery,
-    getDetailsQuery,
-  ]);
-  return result;
 };
 
-module.exports = { getSeatsDataDao, isEventExistDao };
+module.exports = {
+  getSeatsDataDao,
+  isEventExistDao,
+};
