@@ -3,25 +3,18 @@ const { throwError } = require('../utils');
 
 const getUserPreorderPassByUserId = async (req, res, next) => {
   const { userId } = req.userData;
-  const { preorderPassesId } = req.query;
   try {
-    const hasPreorderPass = await preorderpassService.getUserOrderPassByUserId(userId, preorderPassesId);
+    const hasPreorderPass =
+      await preorderpassService.getUserOrderPassByUserId(userId);
 
-    if (!hasPreorderPass || hasPreorderPass.length === 0) {
-      throwError(400, 'NO_DATA_ORDERPASS');
+    if (!hasPreorderPass.length) {
+      throwError(400, 'NOT_FOUND_ORDERPASS');
     }
 
-    if (hasPreorderPass) {
-      res.status(200).json({
-        message: 'FOUND_ORDERPASS',
-        has_preorder_pass: 1,
-     });
-    } else {
-      res.status(400).json({
-        message: 'NOT_FOUND_ORDERPASS',
-        has_preorder_pass: 0,
-     });
-    }
+    res.status(200).json({
+      message: 'FOUND_ORDERPASS',
+      data: hasPreorderPass,
+    });
   } catch (error) {
     console.log(error);
     next(error);

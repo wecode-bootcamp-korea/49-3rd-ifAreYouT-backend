@@ -1,20 +1,20 @@
+const { log } = require('console');
 const { dataSource } = require('./dataSource');
 
-const getUserPreorderPassByUserId = async (userId, preorderPassesId) => {
+const getUserPreorderPassByUserId = async (userId) => {
   const user = await dataSource.query(
     `
     SELECT
-      COUNT(*) AS has_preorder_pass
+      e.title AS eventTitle
     FROM users AS u
     INNER JOIN preorder_passes AS pp ON pp.user_id = u.id
-    WHERE u.id = ? AND pp.id = ?
+    INNER JOIN events AS e ON pp.event_id = e.id
+    WHERE u.id = ?;
     `,
-    [userId, preorderPassesId],
+    [userId],
   );
 
-  const hasPreorderPass = user[0].has_preorder_pass > 0 ? 1 : 0;
-
-  return hasPreorderPass;
+  return user;
 };
 
 module.exports = {

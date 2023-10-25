@@ -1,7 +1,7 @@
 const { preorderpassDao } = require('../models');
 
-const getUserOrderPassByUserId = async (userId, preorderPassesId) => {
-  const orderpassInfo = preorderpassDao.getUserPreorderPassByUserId(userId, preorderPassesId);
+const getUserOrderPassByUserId = async (userId) => {
+  const orderpassInfo = preorderpassDao.getUserPreorderPassByUserId(userId);
   return orderpassInfo;
 };
 
