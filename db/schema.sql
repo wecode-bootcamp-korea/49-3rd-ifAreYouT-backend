@@ -49,7 +49,7 @@ CREATE TABLE `event_images` (
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `event_orders` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `order_name` varchar(20) DEFAULT NULL,
+  `order_number` varchar(20) DEFAULT NULL,
   `ticket_code` varchar(200) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -419,4 +419,5 @@ INSERT INTO `schema_migrations` (version) VALUES
   ('20231016152204'),
   ('20231016152211'),
   ('20231016152214');
+
 UNLOCK TABLES;

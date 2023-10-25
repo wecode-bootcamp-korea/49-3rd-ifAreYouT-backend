@@ -1,7 +1,8 @@
 const express = require('express');
 const { dataSource } = require('../models/dataSource');
 const { makeSeatDummy, makeEventSeatDummy } = require('../utils/makedummy');
-const { addSeatsQuery, addEventSeatsQuery } = require('../models').dummyDao;
+const { addSeatsQuery, addEventSeatsQuery } =
+  require('../models').dummyDao.queries;
 const router = express.Router();
 
 router.get('/add_seats', async (_, res) => {
