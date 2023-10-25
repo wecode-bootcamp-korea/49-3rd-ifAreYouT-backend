@@ -1,3 +1,4 @@
+const { isEmpty } = require('lodash');
 const { seatStatusQueue } = require('../queue');
 const { generateOrderNumber, throwError } = require('../utils');
 
@@ -8,8 +9,9 @@ const {
   isSeatReservableDao,
 } = require('../models').orderDao;
 
-const isEventExistService = (eventId) => {
-  return isEventExistDao(eventId);
+const isEventExistService = async (eventId) => {
+  const eventExist = await isEventExistDao(eventId);
+  if (isEmpty(eventExist)) throwError(400, 'no event data');
 };
 const getSeatsDataService = (eventId) => {
   return getSeatsDataDao(eventId);
