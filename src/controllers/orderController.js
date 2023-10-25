@@ -9,7 +9,7 @@ const getUserOrder = async (req, res, next) => {
     if (!orderInfo || orderInfo.length === 0) {
       throwError(400, 'NOT_FOUND_ORDER');
     }
-    res.status(200).json({
+    return res.status(200).json({
       message: 'GET_ORDER',
       data: orderInfo,
     });
