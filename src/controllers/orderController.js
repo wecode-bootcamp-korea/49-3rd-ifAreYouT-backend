@@ -3,11 +3,8 @@ const { throwError } = require('../utils');
 
 const getUserOrder = async (req, res, next) => {
   const { userId } = req.userData;
-  console.log(userId)
   try {
     const orderInfo = await orderService.getOrderByUserId(userId);
-
-    console.log(orderInfo)
 
     if (!orderInfo || orderInfo.length === 0) {
       throwError(400, 'NOT_FOUND_ORDER');
