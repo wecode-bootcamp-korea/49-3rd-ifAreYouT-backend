@@ -1,6 +1,6 @@
 const { isEmpty } = require('lodash');
 const { throwError, isAllDataHasValue } = require('../utils');
-const { getSeatsDataService, isEventExistService, updateEventSeatService } =
+const { getSeatsDataService, isEventExistService, updateEventSeatService }
   require('../services').orderService;
 
 const getSeatsController = async (req, res, next) => {

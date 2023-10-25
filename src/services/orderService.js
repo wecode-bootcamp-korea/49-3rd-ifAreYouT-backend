@@ -9,6 +9,7 @@ const {
   isSeatReservableDao,
 } = require('../models').orderDao;
 
+
 const isEventExistService = async (eventId) => {
   const eventExist = await isEventExistDao(eventId);
   if (isEmpty(eventExist)) throwError(400, 'no event data');

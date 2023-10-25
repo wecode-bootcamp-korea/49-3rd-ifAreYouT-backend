@@ -3,6 +3,7 @@ const _ = require('lodash');
 const { useTransaction } = require('../utils');
 const uuid4 = require('uuid4');
 
+
 const isEventExistDao = async (eventId) => {
   const [eventExist] = await dataSource.query(
     `
@@ -151,4 +152,5 @@ module.exports = {
   isSeatReservableDao,
   updateSeatStatusDao,
   getOrderNumberBySeatIdDao,
+  };
 };
