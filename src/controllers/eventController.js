@@ -15,7 +15,7 @@ const getLikedEventsByUser = async (req, res, next) => {
       throwError(400,'EVENT_UNEXITED');
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       message: 'LIKED_EVENTS_FOUND',
       data: likesInfo,
     });
