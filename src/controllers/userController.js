@@ -3,6 +3,7 @@ const { throwError } = require('../utils');
 const { v4: uuidv4 } = require('uuid');
 
 const addCreateUser = async (req, res, next) => {
+  const { userId } = req.userData;
   const uid = uuidv4();
   try {
   const { email, nickname, phoneNumber, provider } = req.body;
@@ -15,7 +16,8 @@ const addCreateUser = async (req, res, next) => {
       nickname,
       phoneNumber,
       provider,
-      uid
+      uid,
+      userId
     );
     return res.status(200).json({
       message: 'SUCCESS',
