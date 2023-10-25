@@ -8,7 +8,7 @@ const seatStatusQueue = new Bull(
 
 seatStatusQueue.process(processQueue);
 
-seatStatusQueue.on('completed', (job, result) => {
+seatStatusQueue.on('completed', (job) => {
   console.log(`Job completed: ${job.id}`);
 });
 
