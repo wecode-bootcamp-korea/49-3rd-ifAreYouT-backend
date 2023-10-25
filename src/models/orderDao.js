@@ -16,9 +16,8 @@ const isEventExistDao = async (eventId) => {
 const getOrderIdByOrderNumberQuery = `SELECT id FROM orders WHERE order_no = ?`;
 
 const getSeatsDataDao = async (eventId) => {
-  const getSeatsQueryRunner = async (queryRunner) => {
-    const seats = await queryRunner.query(
-      `
+  const seats = await dataSource.query(
+    `
       SELECT
       s.id,
       CONCAT(s.row_name, '-', s.col_name) AS name,
@@ -34,13 +33,10 @@ const getSeatsDataDao = async (eventId) => {
       WHERE 
         events.id = ?
       `,
-      [eventId],
-    );
-    return { seats };
-  };
-  const getDetailsQueryRunner = async (queryRunner) => {
-    const detail = await queryRunner.query(
-      `
+    [eventId],
+  );
+  const detail = await dataSource.query(
+    `
       SELECT
         seat_grades.grade,        
         seat_grades.price
@@ -51,15 +47,12 @@ const getSeatsDataDao = async (eventId) => {
       WHERE 
         events.id = ?        
       `,
-      [eventId],
-    );
-    return { detail };
+    [eventId],
+  );
+  return {
+    seats,
+    detail,
   };
-  const result = await useTransaction(dataSource, [
-    getSeatsQueryRunner,
-    getDetailsQueryRunner,
-  ]);
-  return result;
 };
 
 const isSeatReservableDao = async (data) => {
