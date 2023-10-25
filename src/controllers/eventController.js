@@ -11,10 +11,6 @@ const getLikedEventsByUser = async (req, res, next) => {
       throwError(400, 'LIKED_EVENTS_NOT_FOUND');
     };
     
-    if (reactionType === 'unexited') {
-      throwError(400,'EVENT_UNEXITED');
-    };
-
     return res.status(200).json({
       message: 'LIKED_EVENTS_FOUND',
       data: likesInfo,
