@@ -10,6 +10,18 @@ const findByKakaoId = async (kakaoId) => {
     )
     return userInfo
 }
+
+const findByNaverId = async (naverId) => {
+    const userInfo = await dataSource.query(
+        `
+        SELECT id, provider
+        FROM users
+        WHERE uid = ?
+        `, [naverId]
+    )
+    return userInfo
+}
+
 const extraInfoDao = async (phoneNumber, birthDay, userId) => {
     const extraInfo = await dataSource.query(`
         UPDATE users
@@ -19,7 +31,7 @@ const extraInfoDao = async (phoneNumber, birthDay, userId) => {
     return extraInfo;
 }
 
-const createUserDao = async (kakaoId, nickname, email) => {
+const kakaoCreateUserDao = async (kakaoId, nickname, email) => {
     const newUserInfo = await dataSource.query(
         `
         INSERT INTO users (uid, nickname, email)
@@ -30,8 +42,20 @@ const createUserDao = async (kakaoId, nickname, email) => {
     return newUserInfo
 }
 
+const naverCreateUserDao = async (naverId, nickname, email) => {
+    const newUserInfo = await dataSource.query(`
+        INSERT INTO users (uid, nickname, email)
+        VALUES (?, ?, ?)
+        `,
+        [naverId, nickname, email]
+    )
+    return newUserInfo
+}
+
 module.exports = {
     findByKakaoId,
+    findByNaverId,
     extraInfoDao,
-    createUserDao
+    kakaoCreateUserDao,
+    naverCreateUserDao
 }

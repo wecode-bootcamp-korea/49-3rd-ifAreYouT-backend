@@ -1,5 +1,6 @@
 const ticketController = require("./ticketController")
-const authController = require('./authController')
+const authController = require('./kakaoLoginController','./naverLoginController')
+
 
 module.exports = {
     ticketController,

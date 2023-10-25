@@ -5,7 +5,7 @@ const kakaoLogin = async (req, res) => {
             res.json({
                 message: '새로운 사용자입니다!',
                 statusCode: 201,
-                userId
+                userId,
             });
         } else if (req.user.token) {
             const { token, provider } = req.user;
@@ -13,7 +13,7 @@ const kakaoLogin = async (req, res) => {
                 message: "로그인 성공!",
                 statusCode: 200,
                 token,
-                provider
+                provider,
             });
         }
     } else {
