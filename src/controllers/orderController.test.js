@@ -19,17 +19,23 @@ describe('좌석 정보 가져오기', () => {
   beforeAll(async () => {
     app = createApp();
     await dataSource.initialize();
+    addCategoriesDummy(dataSource);
+    addPerformersDummy(dataSource);
+    addStagesDummy(dataSource);
+    addSeatGradesDummy(dataSource);
+    addEventsDummy(dataSource);
+    addSeatsDummy(dataSource);
+    addEventSeatsDummy(dataSource);
   });
   afterAll(async () => {
-    await Promise.all([
-      dataSource.query(`DELETE FROM event_seats`),
-      dataSource.query(`DELETE FROM seat_grades`),
-      dataSource.query(`DELETE FROM seats`),
-      dataSource.query(`DELETE FROM events`),
-      dataSource.query(`DELETE FROM categories`),
-      dataSource.query(`DELETE FROM performers`),
-      dataSource.query(`DELETE FROM stages`),
-    ]);
+    await dataSource.query(`SET foreign_key_checks = 0;`);
+    await dataSource.query(`TRUNCATE event_seats`);
+    await dataSource.query(`TRUNCATE seat_grades`);
+    await dataSource.query(`TRUNCATE seats`);
+    await dataSource.query(`TRUNCATE events`);
+    await dataSource.query(`TRUNCATE categories`);
+    await dataSource.query(`TRUNCATE performers`);
+    await dataSource.query(`TRUNCATE stages`);
     await dataSource.destroy();
   }, 10000);
 
@@ -56,21 +62,44 @@ describe('좌석 정보 가져오기', () => {
       .expect({ error: 'no event data' });
   });
   test('✅SUCCESS: 공연 좌석 데이터 가져오기', async () => {
-    useTransaction(dataSource, [
-      addCategoriesDummy,
-      addPerformersDummy,
-      addStagesDummy,
-      addSeatGradesDummy,
-      addEventsDummy,
-      addSeatsDummy,
-      addEventSeatsDummy,
-    ]);
-    await request(app)
+    const response = await request(app)
       .get('/orders/seats?eventId=1')
       .set(
         'Authorization',
         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJJZCI6MX0sImlhdCI6MTY5NzcxOTY0MiwiZXhwIjoxNzAwMzExNjQyfQ.zuVcbarIWTuPPBm7DvoaYRsKGFV8YJPK68fa2gztFeU',
       )
       .expect('Content-Type', /json/);
+    expect(response.body).toEqual({
+      data: {
+        seats: [
+          {
+            id: 1,
+            name: 'A-1',
+            row: 'A',
+            col: 1,
+            grade: 'R',
+            status: 'available',
+          },
+        ],
+        detail: [
+          {
+            grade: 'R',
+            price: '200000',
+          },
+          {
+            grade: 'S',
+            price: '180000',
+          },
+          {
+            grade: 'A',
+            price: '160000',
+          },
+          {
+            grade: 'C',
+            price: '140000',
+          },
+        ],
+      },
+    });
   });
 });
