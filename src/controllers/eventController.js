@@ -13,7 +13,7 @@ const getLikedEventsByUser = async (req, res, next) => {
     
     if (reactionType === 'unexited') {
       throwError(400,'EVENT_UNEXITED');
-    }
+    };
 
     return res.status(200).json({
       message: 'LIKED_EVENTS_FOUND',
