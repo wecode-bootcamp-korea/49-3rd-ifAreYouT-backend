@@ -98,10 +98,10 @@ const addEventsDummy = async (queryRunner) => {
   );
 };
 const addSeatsDummy = async (queryRunner) => {
-  await queryRunner.query(addSeatsQuery(makeSeatDummy(2, 2, 1, 4)));
+  await queryRunner.query(addSeatsQuery(makeSeatDummy(1, 1, 1, 4)));
 };
 const addEventSeatsDummy = async (queryRunner) => {
-  await queryRunner.query(addEventSeatsQuery(makeEventSeatDummy(4)));
+  await queryRunner.query(addEventSeatsQuery(makeEventSeatDummy(1)));
 };
 
 module.exports = {
