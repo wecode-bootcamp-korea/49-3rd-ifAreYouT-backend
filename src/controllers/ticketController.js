@@ -1,26 +1,25 @@
 const { ticketService } = require('../services');
 const { throwError } = require('../utils');
-const { v4: uuidv4 } = require('uuid');
 
-const getTicketInfoByUserId = async (req, res) => {
-  const userId = req.userData;
+const getTicketInfoByUserId = async (req, res, next) => {
+  const { userId } = req.userData.data;
   try {
     const ticketInfo = await ticketService.getTicketInfo(userId);
 
-    if (!ticketInfo) {
-      throwError(400, 'NOT_FOUND_ORDER');
+    if (!ticketInfo.length) {
+      throwError(400, 'NOT_FOUND_TICKETS');
     }
 
     res.status(200).json({
       message: 'GET_TICKETS',
       data: ticketInfo,
     });
-  } catch (error) {
-    console.log(error);
-    return res.status(400).json(error);
+  } catch (err) {
+    console.log(err);
+    next(err);
   }
 };
 
 module.exports = {
-  getTicketInfoByUserId
+  getTicketInfoByUserId,
 };

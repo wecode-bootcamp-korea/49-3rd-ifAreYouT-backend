@@ -1,7 +1,13 @@
-const ticketService = require("./ticketService");
-const preorderpassService = require("./preorderpassService")
+const eventService = require('./eventService');
+const orderService = require('./orderService');
+const ticketService = require('./ticketService');
+const likesService = require('./likesService');
+const preorderpassService = require("./preorderpassService");
 
 module.exports = {
-    ticketService,
-    preorderpassService
-}
+  eventService,
+  orderService,
+  ticketService,
+  likesService,
+  preorderpassService,
+};
