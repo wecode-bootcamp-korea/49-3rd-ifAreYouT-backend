@@ -16,11 +16,14 @@ const putPaymentInfo = async (userId, amount, orderNumber) => {
   INSERT INTO payments (user_id,amount, status,order_id, method_id)
     VALUES (${userId},${amount},'${status}',${order_id},1)
   `);
-  const data1 = await dataSource.query(`
-  UPDATE orders
-SET order_status = 'purchased'
-WHERE order_id = ${orderNumber}
-  `);
+  const data1 = await dataSource.query(
+    `
+    UPDATE event_seats
+    SET status = 'reserved'
+    WHERE seat_id IN (?)
+  `,
+    [seatIds],
+  );
 
 };
 module.exports = {
