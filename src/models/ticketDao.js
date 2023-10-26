@@ -18,7 +18,7 @@ const getTicketInfoByUserId = async (userId) => {
    WHERE o.user_id = ?;`,
     [userId],
   );
-  return user;
+  return user
 };
 
 module.exports = {
