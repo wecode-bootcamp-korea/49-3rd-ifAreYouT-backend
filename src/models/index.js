@@ -4,6 +4,7 @@ const orderDao = require('./orderDao');
 const dummyDao = require('./dummyDao');
 const ticketDao = require('./ticketDao');
 const likesDao = require('./likesDao');
+const preorderpassDao = require('./preorderpassDao');
 
 module.exports = {
   eventDao,
@@ -12,4 +13,5 @@ module.exports = {
   dummyDao,
   ticketDao,
   likesDao,
+  preorderpassDao,
 };
