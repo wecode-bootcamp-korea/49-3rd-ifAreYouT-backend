@@ -1,7 +1,9 @@
-const ticketController = require("./ticketController")
-const orderController = require("./orderController")
+const eventController = require('./eventController');
+const orderController = require('./orderController');
+const ticketController = require('./ticketController');
 
 module.exports = {
-    ticketController,
-    orderController
-}
+  eventController,
+  orderController,
+  ticketController,
+};

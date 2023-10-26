@@ -1,4 +1,13 @@
-const ticketDao = require("./ticketDao");
-const orderDao = require("./orderDao");
+const eventDao = require('./eventDao');
+const queryBuilder = require('./queryBuilder');
+const orderDao = require('./orderDao');
+const dummyDao = require('./dummyDao');
+const ticketDao = require('./ticketDao');
 
-module.exports = { ticketDao, orderDao }
+module.exports = {
+  eventDao,
+  queryBuilder,
+  orderDao,
+  dummyDao,
+  ticketDao,
+};

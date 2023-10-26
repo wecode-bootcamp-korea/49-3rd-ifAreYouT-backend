@@ -1,8 +1,11 @@
 const express = require('express');
-const { orderController } = require('../controllers');
+
 const router = express.Router();
+const { getSeatsController, updateEventSeatsController, getUserOrder } =
+  require('../controllers').orderController;
 
-router.get("/details", orderController.getUserOrder)
-
+router.get('/seats', getSeatsController);
+router.patch('/seats', updateEventSeatsController);
+router.get("/details", getUserOrder);
 
 module.exports = router;
