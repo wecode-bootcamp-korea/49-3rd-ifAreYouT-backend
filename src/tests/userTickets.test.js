@@ -1,12 +1,9 @@
 const request = require('supertest');
 const { createApp } = require('../app');
 const { dataSource } = require('../src/models/dataSource');
-const jwt = require('jsonwebtoken');
 
 describe('user get ticket', () => {
   let app;
-  let userId;
-  let accessToken;
 
   beforeAll(async () => {
     app = createApp();
@@ -14,9 +11,9 @@ describe('user get ticket', () => {
     await dataSource.query(`DELETE FROM event_reactions`);
     await dataSource.query(`
     INSERT INTO users 
-      (email, nickname, phone_number, provider, uid)
+      (id, email, nickname, phone_number, provider, uid)
     VALUES 
-      ('wecode13@gmil.com', 'testUser', '010-1234-5678', 'kakao', '1');
+      (1, 'wecode13@gmil.com', 'testUser', '010-1234-5678', 'kakao', '1');
     `);
     await dataSource.query(`
     INSERT INTO stages
@@ -28,7 +25,7 @@ describe('user get ticket', () => {
     INSERT INTO seat_grades 
       (grade, price, stage_id) 
     VALUES 
-      (1, 1, 1)
+      (1, 200000, 1)
     `);
     await dataSource.query(`
     INSERT INTO categories
@@ -42,14 +39,13 @@ describe('user get ticket', () => {
     VALUES 
       ('testname')
     `);
-    await dataSource.query(`INSERT INTO promotions (id) VALUES (1)`);
-    await dataSource.query(`DELETE FROM events`);
+    await dataSource.query(`INSERT INTO promotions (id) VALUES (1)`)
     await dataSource.query(`
     INSERT INTO events 
-      (id, title, playtime, description, status, start_date, end_date, sales_start_date, sales_end_date,
+      (title, playtime, description, status, start_date, end_date, sales_start_date, sales_end_date,
       stage_id, category_id, performer_id, promotion_id) 
     VALUES
-     (1, 'testtitle', '2hour', 'test', 'merchantable', NOW(), NOW(), NOW(), NOW(), 1, 1, 1, 1)
+     ('아리아나 그란데 내한', '2hour', 'test', 'merchantable', NOW(), NOW(), NOW(), NOW(), 1, 1, 1, 1)
     `);
     await dataSource.query(`
     INSERT INTO times
@@ -58,10 +54,10 @@ describe('user get ticket', () => {
       (1, '03', '23-03-23', 1)
     `);
     await dataSource.query(`
-    INSERT INTO seats
-     (row_name, col_name, stage_id, grade_id)
-    VALUES
-      ('test', '123', 1, 1)
+      INSERT INTO seats
+      (row_name, col_name, stage_id, grade_id)
+      VALUES
+        ('test', '123', 1, 1)
     `);
     await dataSource.query(`
     INSERT INTO orders
@@ -71,25 +67,15 @@ describe('user get ticket', () => {
     `);
     await dataSource.query(`
     INSERT INTO event_orders
-     (id, time_id, seat_id, order_id, order_name, ticket_code)
+     (id, time_id, seat_id, order_id, ticket_code)
     VALUES
-     (1, 1, 1, 1, 'testordername', 'testticketcode')
+     (1, 1, 1, 1, 'testticketcode')
     `);
-
-    const userResult = await dataSource.query(
-      'SELECT * FROM users WHERE email = ?',
-      ['wecode13@gmil.com'],
-    );
-
-    userId = userResult[0].id;
-    accessToken = jwt.sign({ id: userId }, process.env.JWT_SECRET, {
-      expiresIn: '30d',
-    });
+    
   });
 
   afterAll(async () => {
     await dataSource.query(`SET foreign_key_checks = 0;`);
-    await dataSource.query(`DELETE FROM event_reactions`);
     await dataSource.query(`TRUNCATE users`);
     await dataSource.query(`TRUNCATE stages`);
     await dataSource.query(`TRUNCATE seat_grades`);
@@ -105,23 +91,38 @@ describe('user get ticket', () => {
     await dataSource.destroy();
   });
 
-  test('GET_TICKETS: valid order', async () => {
+  test('GET_TICKETS: valid tickets', async () => {
     const res = await request(app)
-      .get(`/tickets`)
-      .set('Authorization', `Bearer ${accessToken}`);
-    expect(res.status).toBe(200);
-    expect(res.body.message).toEqual('GET_TICKETS');
+    .get(`/tickets`)
+    .set('Authorization', 
+    `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJJZCI6MX0sImlhdCI6MTY5NzcxOTY0MiwiZXhwIjoxNzAwMzExNjQyfQ.zuVcbarIWTuPPBm7DvoaYRsKGFV8YJPK68fa2gztFeU`
+    )
+    .expect(200);
+
+    expect(res.body).toEqual(
+      {
+        "message": "GET_TICKETS",
+        "data": [
+          {
+            "ticketCode": "testticketcode",
+            "eventName": "아리아나 그란데 내한",
+            "rowName": "test",
+            "colName": 123,
+            "ticketPrice": "200000"
+          }
+        ]
+      }
+    )
   });
 
-  test('INVALID_ORDER_ID: invalid order', async () => {
-    try {
-      const res = await request(app)
-        .get(`/tickets`)
-        .set('Authorization', `Bearer ${accessToken}`);
-      expect(res.status).toBe(400);
-      expect(res.body.message).toEqual('NOT_FOUND_ORDER');
-    } catch (error) {
-      console.log(error);
-    }
+  test('INVALID_TICKETS: invalid ticketsinfo', async () => {
+    await request(app)
+      .get(`/tickets?userId=1`)
+      .set('Authorization',
+      `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJJZCI6MX0sImlhdCI6MTY5NzcxOTY0MiwiZXhwIjoxNzAwMzExNjQyfQ.zuVcbarIWTuPPBm7DvoaYRsKGFV8YJPK68fa2gztFeU`
+      )
+      .expect('Content-Type', /json/)
+      .expect(400)
+       expect({ error: 'NOT_FOUND_TICKETS' });
   });
 });
