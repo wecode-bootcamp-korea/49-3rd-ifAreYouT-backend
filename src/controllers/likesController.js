@@ -7,7 +7,7 @@ const getLikedEventsByUser = async (req, res, next) => {
   try {
     const likesInfo = await likesService.getLikedEvents(userId, reactionType);
 
-    if (!likesInfo || likesInfo.length === 0) {
+    if (!likesInfo.length === 0) {
       throwError(400, 'LIKED_EVENTS_NOT_FOUND');
     }
 
