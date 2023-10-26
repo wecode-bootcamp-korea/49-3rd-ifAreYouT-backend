@@ -12,15 +12,6 @@ const dataSource = new DataSource({
   supportBigNumbers: true,
 });
 
-dataSource
-  .initialize()
-  .then(() => {
-    console.log('Data Source has been initialized!');
-  })
-  .catch((err) => {
-    console.error(err);
-  });
-
 module.exports = {
   dataSource,
 };

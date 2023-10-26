@@ -42,7 +42,7 @@ describe('user get ticket', () => {
     VALUES 
       ('testname')
     `);
-    await dataSource.query(`INSERT INTO promotions (id) VALUES (1)`)
+    await dataSource.query(`INSERT INTO promotions (id) VALUES (1)`);
     await dataSource.query(`DELETE FROM events`);
     await dataSource.query(`
     INSERT INTO events 
@@ -76,11 +76,15 @@ describe('user get ticket', () => {
      (1, 1, 1, 1, 'testordername', 'testticketcode')
     `);
 
-    const userResult = await dataSource.query('SELECT * FROM users WHERE email = ?', ['wecode13@gmil.com']);
+    const userResult = await dataSource.query(
+      'SELECT * FROM users WHERE email = ?',
+      ['wecode13@gmil.com'],
+    );
 
     userId = userResult[0].id;
-    accessToken = jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '30d' });
-    
+    accessToken = jwt.sign({ id: userId }, process.env.JWT_SECRET, {
+      expiresIn: '30d',
+    });
   });
 
   afterAll(async () => {
@@ -96,15 +100,15 @@ describe('user get ticket', () => {
     await dataSource.query(`TRUNCATE seats`);
     await dataSource.query(`TRUNCATE orders`);
     await dataSource.query(`TRUNCATE event_orders`);
-    await dataSource.query(`TRUNCATE promotions`)
+    await dataSource.query(`TRUNCATE promotions`);
     await dataSource.query(`SET foreign_key_checks = 1;`);
     await dataSource.destroy();
   });
 
   test('GET_TICKETS: valid order', async () => {
     const res = await request(app)
-    .get(`/tickets`)
-    .set('Authorization', `Bearer ${accessToken}`);
+      .get(`/tickets`)
+      .set('Authorization', `Bearer ${accessToken}`);
     expect(res.status).toBe(200);
     expect(res.body.message).toEqual('GET_TICKETS');
   });
@@ -112,12 +116,12 @@ describe('user get ticket', () => {
   test('INVALID_ORDER_ID: invalid order', async () => {
     try {
       const res = await request(app)
-      .get(`/tickets`)
-      .set('Authorization', `Bearer ${accessToken}`);
+        .get(`/tickets`)
+        .set('Authorization', `Bearer ${accessToken}`);
       expect(res.status).toBe(400);
       expect(res.body.message).toEqual('NOT_FOUND_ORDER');
     } catch (error) {
-     console.log(error);
+      console.log(error);
     }
   });
 });
