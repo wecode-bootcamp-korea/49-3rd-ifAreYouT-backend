@@ -86,7 +86,7 @@ describe('user get ticket', () => {
     await dataSource.query(`TRUNCATE seats`);
     await dataSource.query(`TRUNCATE orders`);
     await dataSource.query(`TRUNCATE event_orders`);
-    await dataSource.query(`TRUNCATE promotions`)
+    await dataSource.query(`TRUNCATE promotions`);
     await dataSource.query(`SET foreign_key_checks = 1;`);
     await dataSource.destroy();
   });

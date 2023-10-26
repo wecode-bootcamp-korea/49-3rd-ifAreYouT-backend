@@ -419,4 +419,5 @@ INSERT INTO `schema_migrations` (version) VALUES
   ('20231016152204'),
   ('20231016152211'),
   ('20231016152214');
+
 UNLOCK TABLES;
