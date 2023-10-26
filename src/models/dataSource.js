@@ -8,16 +8,9 @@ const dataSource = new DataSource({
   password: process.env.TYPEORM_PASSWORD,
   database: process.env.TYPEORM_DATABASE,
   logging: true,
+  bigNumberStrings: false,
+  supportBigNumbers: true,
 });
-
-dataSource
-  .initialize()
-  .then(() => {
-    console.log('Data Source has been initialized!');
-  })
-  .catch((err) => {
-    console.error(err);
-  });
 
 module.exports = {
   dataSource,

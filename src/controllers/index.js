@@ -1,8 +1,18 @@
 const paymentController = require('./payment.controller');
 //const promotionController = require('./promotion.controller');
-const ticketController = require("./ticketController")
+const eventController = require('./eventController');
+const orderController = require('./orderController');
+const ticketController = require('./ticketController');
+const likesController = require('./likesController');
+const preorderpassController = require('./preorderpassController');
+
 module.exports = {
   paymentController,
   //promotionController,
   ticketController,
+  eventController,
+  orderController,
+  ticketController,
+  likesController,
+  preorderpassController,
 };
