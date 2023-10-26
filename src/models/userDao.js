@@ -22,15 +22,6 @@ const findByNaverId = async (naverId) => {
     return userInfo
 }
 
-const extraInfoDao = async (phoneNumber, birthDay, userId) => {
-    const extraInfo = await dataSource.query(`
-        UPDATE users
-        SET phone_number = ?, birthday = ?
-        WHERE id = ?
-    `, [phoneNumber, birthDay, userId]);
-    return extraInfo;
-}
-
 const kakaoCreateUserDao = async (kakaoId, nickname, email) => {
     const newUserInfo = await dataSource.query(
         `
@@ -55,7 +46,6 @@ const naverCreateUserDao = async (naverId, nickname, email) => {
 module.exports = {
     findByKakaoId,
     findByNaverId,
-    extraInfoDao,
     kakaoCreateUserDao,
     naverCreateUserDao
 }

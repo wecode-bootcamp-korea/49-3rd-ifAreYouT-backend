@@ -40,22 +40,20 @@ app.use('/', indexRouter);
 app.use('/kakao', kakaoLoginRouter);
 app.use('/naver', naverLoginRouter);
 
-app.post('/auth/kakao/callback', async (req, res) => {
-  const { code } = req.query; // 인가 코드를 요청 본문에서 추출 req.query
-
+app.get('/auth/kakao/callback', async (req, res) => {
+  const {code} = req.query // 인가 코드를 요청 본문에서 추출 req.query
+  console.log(code)
   try {
+    console.log(code)
     // 카카오 서버에 액세스 토큰 요청
     const response = await axios.post('https://kauth.kakao.com/oauth/token', null, {
       headers: {
-        "Content-type":
+        "Content-Type":
           "application/x-www-form-urlencoded;charset=utf-8"
       },
-      params: {
-        grant_type: 'authorization_code',
-        client_id: process.env.KAKAO_ID, //restapi
-        redirect_uri: 'http://localhost:8000/auth/kakao/callback',
-        code,
-      },
+      data:
+        `grant_type=authorization_code&client_id=${process.env.KAKAO_ID}&redirect_uri=http://localhost:8000/auth/kakao/callback&code=${code}`,
+
     });
 
     const { access_token } = response.data;
@@ -86,14 +84,15 @@ app.post('/auth/kakao/callback', async (req, res) => {
   }
 });
 
-app.post('/auth/naver/callback', async (req, res) => {
+app.get('/auth/naver/callback', async (req, res) => {
   const { code } = req.query; // 실제로는 인가 코드를 요청 본문에서 추출 (req.query 사용)
-
+    console.log(code)
   try {
+    console.log(code)
     // 네이버 서버에 액세스 토큰 요청
     const response = await axios.post('https://nid.naver.com/oauth2.0/token', null, {
       headers: {
-        "Content-type": "application/x-www-form-urlencoded;charset=utf-8"
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
       },
       params: {
         grant_type: 'authorization_code',
@@ -116,7 +115,7 @@ app.post('/auth/naver/callback', async (req, res) => {
           }
         })
         const userData = userResponse.data;
-        res.statusCode(200).json(userData);
+        res.status(200).json(userData);
       } catch (error) {
         console.error(error);
         res.status(500).json({ message: '사용자 정보 요청 실패' });

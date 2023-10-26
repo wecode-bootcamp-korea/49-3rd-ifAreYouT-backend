@@ -41,23 +41,27 @@ passport.use('kakao', new KakaoStrategy({
                 if (!exUserData) {
                     return done(throwError(404, '유저 데이터 불러오기 실패'));
                 } else {
-                    const newUser = await kakaoCreateUserDao(kakaoId);
+                    const newUserData = {
+                        userId: userId,
+                        nickname: profile.username,
+                        email: profile._json.kakao_account.email,
+                    };
+
+                    const newUser = await kakaoCreateUserDao(
+                        kakaoId, newUserData.nickname, newUserData.email
+                        );
                     if (!newUser) {
                         return done(throwError(404, '가입 사용자 데이터 오류'));
                     }
 
-                    const newUserData = {
-                        userId: newUser.id,
-                        email: newUser.email,
-                        nickname: newUser.nickname
-                    };
+
 
                     done(null, newUserData);
                 }
             }
 
         } catch (error) {
-            console.error(error);
+            console.error('KakaoStrategy Error:', error);
             done(error);
         }
     })
@@ -88,21 +92,26 @@ passport.use('naver', new NaverStrategy({
             if (!exUserData) {
                 return done(throwError(404, '유저 데이터 불러오기 실패'));
             } else {
-                const newUser = await naverCreateUserDao(naverId);
+
+                const newUserData = {
+                    userId: naverId,
+                    nickname: profile.displayName,
+                    email: profile.emails[0].value
+
+                };
+                const newUser = await naverCreateUserDao(
+                    naverId, newUserData.nickname, newUserData.email
+                );
                 if (!newUser) {
                     return done(throwError(404, '가입 사용자 데이터 오류'));
                 }
 
-                const newUserData = {
-                    userId: newUser.id,
-                    email: newUser.email,
-                    nickname: newUser.nickname
-                };
+
 
                 done(null, newUserData);
             }
         } catch (error) {
-            console.error(error);
+            console.error('NaverStrategy Error:', error);
             done(error);
         }
     }));
