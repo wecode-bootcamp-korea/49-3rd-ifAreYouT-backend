@@ -18,8 +18,7 @@ const getOrderIdByOrderNumberQuery = `SELECT id FROM orders WHERE order_no = ?`;
 
 const getSeatsDataDao = async (eventId) => {
   const seats = await dataSource.query(
-    `
-      SELECT
+    `SELECT
       s.id,
       CONCAT(s.row_name, '-', s.col_name) AS name,
       s.row_name AS 'row',
@@ -76,7 +75,7 @@ const updateEventSeatDao = async (data, orderNumber) => {
       SET status = 'disabled'
       WHERE seat_id IN (?)
     `,
-      [seatIds],
+      np[seatIds],
     );
     return { message: 'seat updated' };
   };
@@ -152,5 +151,5 @@ module.exports = {
   isSeatReservableDao,
   updateSeatStatusDao,
   getOrderNumberBySeatIdDao,
-  };
 };
+

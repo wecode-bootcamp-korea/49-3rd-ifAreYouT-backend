@@ -5,5 +5,4 @@ const router = express.Router();
 
 router.get("/", verificateToken, ticketController.getTicketInfoByUserId)
 
-
 module.exports = router;
