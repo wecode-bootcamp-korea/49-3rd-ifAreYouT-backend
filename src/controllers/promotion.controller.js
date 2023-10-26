@@ -21,14 +21,21 @@ const putPreorderPass = async (req, res) => {
     const { promotionId } = req.params;
     const { eventId, ans } = req.body;
     console.log(ans);
+    console.log(req.body);
     const data = await promotionService.putPreorderPass(
       userId,
       eventId,
       promotionId,
       ans,
     );
+    let ret = '';
+    if (data == 1) {
+      ret = 'SUCCESS';
+    } else {
+      ret = 'FAILURE';
+    }
     res.status(201).json({
-      message: data,
+      message: ret,
     });
   } catch (error) {
     console.log('error!', error);
