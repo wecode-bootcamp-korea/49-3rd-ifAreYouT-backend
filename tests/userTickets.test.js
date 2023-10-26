@@ -93,7 +93,7 @@ describe('user get ticket', () => {
 
   test('GET_TICKETS: valid tickets', async () => {
     const res = await request(app)
-    .get(`/tickets?userId=1`)
+    .get(`/tickets`)
     .set('Authorization', 
     `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJJZCI6MX0sImlhdCI6MTY5NzcxOTY0MiwiZXhwIjoxNzAwMzExNjQyfQ.zuVcbarIWTuPPBm7DvoaYRsKGFV8YJPK68fa2gztFeU`
     )
@@ -117,7 +117,7 @@ describe('user get ticket', () => {
 
   test('INVALID_TICKETS: invalid ticketsinfo', async () => {
     await request(app)
-      .get(`/tickets`)
+      .get(`/tickets?userId=1`)
       .set('Authorization',
       `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJJZCI6MX0sImlhdCI6MTY5NzcxOTY0MiwiZXhwIjoxNzAwMzExNjQyfQ.zuVcbarIWTuPPBm7DvoaYRsKGFV8YJPK68fa2gztFeU`
       )
