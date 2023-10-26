@@ -5,14 +5,10 @@ const putPaymentInfo = async (req, res) => {
   const { userId } = req.userData;
   console.log('userid', userId);
 
-  const { amount, orderNumber } = req.body;
-  console.log(req.body);
+  // const { amount, orderNumber } = req.body;
+  // console.log(req.body);
   try {
-    const data = await paymentService.putPaymentInfo(
-      userId,
-      amount,
-      orderNumber,
-    );
+    const data = await paymentService.putPaymentInfo({ userId, ...req.body });
     res.status(201).json({
       message: 'PAYMENT SUCCESS',
       data: data,

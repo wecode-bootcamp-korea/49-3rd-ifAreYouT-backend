@@ -2,7 +2,6 @@ const express = require('express');
 const paymentRouter = require('./payment.route');
 const ticketRouter = require("./ticketRouter");
 //const promotionRouter = require('./promotion.route');
-//const promotionRouter = require('./promotion.route');
 const router = express.Router();
 
 console.log('he');
