@@ -3,7 +3,6 @@ const _ = require('lodash');
 const { useTransaction } = require('../utils');
 const uuid4 = require('uuid4');
 
-
 const isEventExistDao = async (eventId) => {
   const [eventExist] = await dataSource.query(
     `
@@ -93,9 +92,7 @@ const updateEventSeatDao = async (data, orderNumber) => {
     ]);
     const values = seats
       .map((data) => {
-        return `(${orderNumber}, '${uuid4()}', ${timeId}, ${data.seatId}, ${
-          orderId.id
-        })`;
+        return `(${orderNumber}, '${uuid4()}', ${timeId}, ${data.seatId}, ${orderId.id})`;
       })
       .join(', ');
     await queryRunner.query(
@@ -131,10 +128,7 @@ const updateSeatStatusDao = async (seats, orderNumber) => {
     );
     return { message: 'seat updated' };
   };
-  useTransaction(dataSource, [
-    updateEventOrderQueryRunner,
-    updateEventSeatsQueryRunner,
-  ]);
+  useTransaction(dataSource, [updateEventOrderQueryRunner, updateEventSeatsQueryRunner]);
 };
 const getOrderNumberBySeatIdDao = async (seats) => {
   const orderNumber = await dataSource.query(
@@ -152,5 +146,4 @@ module.exports = {
   isSeatReservableDao,
   updateSeatStatusDao,
   getOrderNumberBySeatIdDao,
-  };
 };
