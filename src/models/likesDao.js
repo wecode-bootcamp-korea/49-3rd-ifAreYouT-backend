@@ -17,7 +17,6 @@ const getLikedEventsByUserId = async (userId, reactionType) => {
     `,
       [userId, reactionType],
     );
-    console.log(likesInfo);
     return likesInfo;
   };
   
