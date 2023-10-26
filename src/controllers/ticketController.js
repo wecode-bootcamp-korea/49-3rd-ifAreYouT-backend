@@ -7,7 +7,7 @@ const getTicketInfoByUserId = async (req, res, next) => {
     const ticketInfo = await ticketService.getTicketInfo(userId);
 
     if (!ticketInfo.length) {
-      throwError(400, 'NOT_FOUND_ORDER');
+      throwError(400, 'NOT_FOUND_TICKETS');
     }
 
     res.status(200).json({
