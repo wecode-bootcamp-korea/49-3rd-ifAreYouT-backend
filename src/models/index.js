@@ -3,6 +3,7 @@ const queryBuilder = require('./queryBuilder');
 const orderDao = require('./orderDao');
 const dummyDao = require('./dummyDao');
 const ticketDao = require('./ticketDao');
+const likesDao = require('./likesDao');
 
 module.exports = {
   eventDao,
@@ -10,4 +11,5 @@ module.exports = {
   orderDao,
   dummyDao,
   ticketDao,
+  likesDao,
 };

@@ -1,9 +1,16 @@
 const { eventService } = require('../services');
+const { throwError } = require('../utils');
 
 const viewByCategory = async (req, res) => {
   const { category = 'ballad', sort, page, size } = req.query;
   const offset = size * (page - 1);
-  const result = await eventService.viewByCategory(category, sort, offset, page, size);
+  const result = await eventService.viewByCategory(
+    category,
+    sort,
+    offset,
+    page,
+    size,
+  );
   res.status(200).json({ data: result[0] });
 };
 

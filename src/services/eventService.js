@@ -9,7 +9,11 @@ const viewByCategory = async (category, sort, offset, page, size) => {
   const pageQuery = await queryBuilder.page(offset, size);
 
   const dataA = await eventDao.totalCountByCategory(category);
-  const dataB = await eventDao.viewByCategory(category, orderByQuery, pageQuery);
+  const dataB = await eventDao.viewByCategory(
+    category,
+    orderByQuery,
+    pageQuery,
+  );
   dataA[0].list = dataB;
   return dataA;
 };
