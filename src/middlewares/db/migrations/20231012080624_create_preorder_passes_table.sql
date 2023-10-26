@@ -1,6 +1,6 @@
 -- migrate:up
 CREATE TABLE `preorder_passes` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `id` integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `event_id` integer NOT NULL,
   `user_id` integer NOT NULL,
   `created_at` TIMESTAMP,

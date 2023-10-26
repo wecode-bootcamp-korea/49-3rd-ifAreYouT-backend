@@ -1,8 +1,9 @@
-//const paymentController = require('./payment.controller');
-const promotionController = require('./promotion.controller');
+const orderController = require('./orderController');
 const ticketController = require('./ticketController');
+const promotionController = require('./promotion.controller');
+
 module.exports = {
-  // paymentController,
-  promotionController,
+  orderController,
   ticketController,
+  promotionController
 };

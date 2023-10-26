@@ -1,6 +1,5 @@
 -- migrate:up
 CREATE TABLE `questions` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
   `performer_question` varchar(512) NOT NULL,
   `performer_answer` tinyint NOT NULL,
   `promotion_question_id` integer NOT NULL,

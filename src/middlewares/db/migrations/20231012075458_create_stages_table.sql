@@ -1,6 +1,6 @@
 -- migrate:up
 CREATE TABLE `stages` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `id` integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
   `location_lat` float,
   `location_lon` float

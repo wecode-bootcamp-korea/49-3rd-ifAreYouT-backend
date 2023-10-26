@@ -1,6 +1,6 @@
 -- migrate:up
 CREATE TABLE `events` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `id` integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `title` varchar(50) NOT NULL,
   `playtime` varchar(10) NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -14,7 +14,7 @@ CREATE TABLE `events` (
   `stage_id` integer NOT NULL,
   `category_id` integer NOT NULL,
   `performer_id` integer NOT NULL,
-  `promotion_id` integer,
+  `promotion_id` integer NOT NULL,
   FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
   FOREIGN KEY (`stage_id`) REFERENCES `stages` (`id`),
   FOREIGN KEY (`performer_id`) REFERENCES `performers` (`id`),

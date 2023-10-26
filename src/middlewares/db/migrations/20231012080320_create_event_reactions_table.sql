@@ -1,6 +1,6 @@
 -- migrate:up
 CREATE TABLE `event_reactions` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `id` integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `reaction_type` enum('exited', 'unexited') NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,

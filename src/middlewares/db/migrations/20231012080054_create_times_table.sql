@@ -1,6 +1,6 @@
 -- migrate:up
 CREATE TABLE `times` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `id` integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `event_time` time NOT NULL,
   `event_day` TIMESTAMP,
   `event_id` integer NOT NULL,

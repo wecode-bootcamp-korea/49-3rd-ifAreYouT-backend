@@ -1,6 +1,6 @@
 -- migrate:up
 CREATE TABLE `event_seats` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `id` integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `status` enum('available', 'reserved', 'disabled') NOT NULL,
   `event_id` integer NOT NULL,
   `seat_id` integer NOT NULL,

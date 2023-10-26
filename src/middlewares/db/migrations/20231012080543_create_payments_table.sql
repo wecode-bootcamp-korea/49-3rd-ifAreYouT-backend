@@ -1,6 +1,6 @@
 -- migrate:up
 CREATE TABLE `payments` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `id` integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `amount` float NOT NULL,
   `status` enum('pending', 'processing', 'success', 'failed') NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
