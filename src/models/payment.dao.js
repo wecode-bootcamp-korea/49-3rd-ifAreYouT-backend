@@ -14,12 +14,14 @@ const putPaymentInfo = async (userId, amount, orderNumber) => {
   const status = 'SUCCESS';
   const data = await dataSource.query(`
   INSERT INTO payments (user_id,amount, status,order_id, method_id)
-    VALUES (${userId},${amount},'${status}',${order_id},1);
+    VALUES (${userId},${amount},'${status}',${order_id},1)
   `);
-  // const data1 = await dataSource.query(`
-  // INSERT INTO payments (user_id,amount, status,order_id, method_id)
-  //   VALUES (${userId},${amount},'${status}',${order_id},1);
-  // `);
+  const data1 = await dataSource.query(`
+  UPDATE orders
+SET order_status = 'purchased'
+WHERE order_id = ${orderNumber}
+  `);
+
 };
 module.exports = {
   putPaymentInfo,
