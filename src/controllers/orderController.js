@@ -6,8 +6,7 @@ const { getSeatsDataService, isEventExistService, updateEventSeatService } =
 const getSeatsController = async (req, res, next) => {
   try {
     const { eventId } = req.query;
-    if (!eventId)
-      throwError(400, 'required query parameter eventId is missing');
+    if (!eventId) throwError(400, 'required query parameter eventId is missing');
     await isEventExistService(eventId);
     const seatsData = await getSeatsDataService(eventId);
     res.status(200).json({
@@ -24,8 +23,7 @@ const updateEventSeatsController = async (req, res, next) => {
     const { userId } = req.userData;
     const { eventId } = req.query;
     const { seats } = req.body;
-    if (!eventId)
-      throwError(400, 'required query parameter eventId is missing');
+    if (!eventId) throwError(400, 'required query parameter eventId is missing');
     await isEventExistService(eventId);
     if (!seats || !isAllDataHasValue(seats)) throwError(400, 'key error');
     const result = await updateEventSeatService({ ...req.body, userId: 1 });
