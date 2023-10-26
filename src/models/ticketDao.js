@@ -1,7 +1,7 @@
 const { dataSource } = require('./dataSource');
 
 const getTicketInfoByUserId = async (userId) => {
-  const user = await dataSource.query(
+  const ticketInfo = await dataSource.query(
     ` 
     SELECT 
     eo.ticket_code AS ticketCode, 
@@ -18,7 +18,7 @@ const getTicketInfoByUserId = async (userId) => {
    WHERE o.user_id = ?;`,
     [userId],
   );
-  return user
+  return ticketInfo;
 };
 
 module.exports = {

@@ -2,11 +2,11 @@ const { ticketService } = require('../services');
 const { throwError } = require('../utils');
 
 const getTicketInfoByUserId = async (req, res, next) => {
-  const { userId } = req.userData;
+  const { userId } = req.userData.data;
   try {
     const ticketInfo = await ticketService.getTicketInfo(userId);
 
-    if (!ticketInfo) {
+    if (!ticketInfo.length) {
       throwError(400, 'NOT_FOUND_ORDER');
     }
 
