@@ -198,7 +198,7 @@ const viewEventsMain = async () => {
     FROM events
     LEFT JOIN event_images ON events.id = event_images.event_id
     ORDER BY RAND()
-    LIMIT 3
+    LIMIT 8
     `;
   return await dataSource.query(query);
 };

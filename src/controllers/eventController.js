@@ -1,5 +1,4 @@
 const { eventService } = require('../services');
-const { verifyToken } = require('../utils');
 
 const viewByCategory = async (req, res) => {
   const { category = 'ballad', sort, page, size } = req.query;
@@ -25,7 +24,6 @@ const viewBySearch = async (req, res) => {
 const updateReaction = async (req, res) => {
   const { eventId, reaction } = req.body;
   const userId = req.userData;
-
   await eventService.updateReaction(eventId, userId, reaction);
   res.status(200).json({ message: 'add success' });
 };
