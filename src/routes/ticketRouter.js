@@ -1,9 +1,8 @@
 const express = require('express');
-const { ticketController } = require('../controllers');
-const { verificateToken } = require('../middlewares')
+
 const router = express.Router();
+const { getTicketInfoByUserId } = require('../controllers').ticketController;
 
-router.get("/likes", verificateToken, ticketController.getTicketInfoByUserId)
-
+router.get('/', getTicketInfoByUserId);
 
 module.exports = router;
