@@ -1,13 +1,13 @@
 const { isEmpty } = require('lodash');
 const { seatStatusQueue } = require('../queue');
 const { generateOrderNumber, throwError } = require('../utils');
-
 const {
   getSeatsDataDao,
   isEventExistDao,
   updateEventSeatDao,
   isSeatReservableDao,
 } = require('../models').orderDao;
+const { orderDao } = require('../models');
 
 
 const isEventExistService = async (eventId) => {
@@ -26,8 +26,14 @@ const updateEventSeatService = async (data) => {
   return updateEventSeatDao(data, orderNumber);
 };
 
+const getOrderByUserId = async (userId) => {
+  const orderInfo = orderDao.getOrderByUserId(userId);
+  return orderInfo;
+};
+
 module.exports = {
   getSeatsDataService,
   isEventExistService,
   updateEventSeatService,
+  getOrderByUserId
 };
