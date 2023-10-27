@@ -4,7 +4,7 @@ const orderService = require('./orderService');
 const ticketService = require('./ticketService');
 const likesService = require('./likesService');
 const preorderpassService = require("./preorderpassService");
-
+const promotionService = require('./promotion.service');
 module.exports = {
   paymentService,
   ticketService,
@@ -13,4 +13,8 @@ module.exports = {
   ticketService,
   likesService,
   preorderpassService,
+  //paymentService,
+  orderService,
+  promotionService,
+  ticketService,
 };

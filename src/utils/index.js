@@ -26,7 +26,10 @@ const generateToken = (data) => {
  */
 const verifyToken = (token) => {
   try {
-    const decoded = jwt.verify(token.replace('Bearer ', ''), process.env.JWT_SECRET);
+    const decoded = jwt.verify(
+      token.replace('Bearer ', ''),
+      process.env.JWT_SECRET,
+    );
     return decoded;
   } catch (error) {
     return null;
@@ -63,16 +66,6 @@ const throwError = (code, message) => {
   error.message = errorMessage.get(code);
   error.status = code;
   throw error;
-};
-
-const asyncWrap = (asyncController) => {
-  return async (req, res, next) => {
-    try {
-      await asyncController(req, res);
-    } catch (error) {
-      next(error);
-    }
-  };
 };
 
 const isEmptyObject = (obj) => {
@@ -124,7 +117,8 @@ const useTransaction = async (dataSource, queries) => {
     return results;
   } catch (err) {
     console.error(err);
-    throwError(500, 'transaction failed'), await queryRunner.rollbackTransaction();
+    throwError(500, 'transaction failed'),
+      await queryRunner.rollbackTransaction();
   } finally {
     await queryRunner.release();
   }
@@ -137,7 +131,6 @@ module.exports = {
   isValidData,
   throwError,
   useTransaction,
-  asyncWrap,
   isEmptyObject,
   isAllDataHasValue,
   generateOrderNumber,

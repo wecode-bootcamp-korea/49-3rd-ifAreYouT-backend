@@ -38,6 +38,7 @@ const updateEventSeatsController = async (req, res, next) => {
   }
 };
 
+
 const getUserOrder = async (req, res, next) => {
   const { userId } = req.userData.data;
   try {
