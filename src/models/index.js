@@ -1,3 +1,4 @@
+const paymentDao = require('./payment.dao');
 const eventDao = require('./eventDao');
 const queryBuilder = require('./queryBuilder');
 const orderDao = require('./orderDao');
@@ -10,6 +11,7 @@ const ticketDao = require('./ticketDao');
 
 
 module.exports = {
+  paymentDao, 
   eventDao,
   queryBuilder,
   orderDao,
